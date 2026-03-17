@@ -4,20 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>De lo que estoy hecho cuando pienso en ti</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
   body {
-    background: #faf7f2;
-    color: #1a1612;
+    background: #fdf8f0;
+    color: #2a1f0e;
     font-family: 'Cormorant Garamond', serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* Partículas flotantes */
   canvas#particles-bg {
     position: fixed;
     top: 0; left: 0;
@@ -29,7 +28,7 @@
   .book-wrapper {
     position: relative;
     z-index: 1;
-    max-width: 700px;
+    max-width: 680px;
     margin: 0 auto;
     padding: 60px 36px 110px;
   }
@@ -38,7 +37,7 @@
   .portada {
     text-align: center;
     padding: 100px 20px 110px;
-    border-bottom: 1px solid rgba(160,110,40,0.18);
+    border-bottom: 1px solid rgba(138,101,32,0.25);
     margin-bottom: 100px;
     opacity: 0;
     animation: fadeUp 1.8s ease 0.2s forwards;
@@ -46,20 +45,19 @@
 
   .label-serie {
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 0.6rem;
-    font-weight: 200;
-    letter-spacing: 0.44em;
-    color: rgba(150,110,50,0.55);
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.36em;
+    color: #9a7530;
     text-transform: uppercase;
     margin-bottom: 46px;
   }
 
   .titulo-libro {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.6rem, 8vw, 3.9rem);
-    font-weight: 300;
+    font-size: clamp(2.8rem, 8vw, 4rem);
+    font-weight: 400;
     font-style: italic;
-    color: #8a6520;
+    color: #7a5515;
     line-height: 1.1;
     letter-spacing: 0.01em;
     margin-bottom: 40px;
@@ -69,20 +67,21 @@
     display: block;
     margin: 28px auto;
     width: 26px;
-    opacity: 0.35;
+    opacity: 0.5;
   }
 
   .hr-dorado {
     border: none;
-    border-top: 1px solid rgba(160,110,40,0.2);
+    border-top: 1px solid rgba(138,101,32,0.25);
     margin: 30px auto;
     width: 90px;
   }
 
   .dedicatoria {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     font-style: italic;
-    color: rgba(60,45,20,0.55);
+    font-weight: 400;
+    color: #5a4010;
     line-height: 2.2;
   }
 
@@ -95,68 +94,71 @@
 
   .cap-numero {
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 0.58rem;
-    font-weight: 200;
-    letter-spacing: 0.46em;
-    color: rgba(160,110,40,0.45);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    color: #9a7530;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .cap-titulo {
-    font-size: clamp(1.5rem, 5vw, 2rem);
-    font-weight: 300;
+    font-size: clamp(1.6rem, 5vw, 2.1rem);
+    font-weight: 600;
     font-style: italic;
-    color: #7a5818;
+    color: #6b4a10;
     line-height: 1.2;
-    margin-bottom: 30px;
+    margin-bottom: 32px;
     padding-bottom: 18px;
-    border-bottom: 1px solid rgba(160,110,40,0.12);
+    border-bottom: 1px solid rgba(138,101,32,0.18);
   }
 
   .cap-texto {
-    font-size: clamp(1.05rem, 3vw, 1.17rem);
-    font-weight: 300;
-    color: rgba(30,22,10,0.8);
-    line-height: 2.1;
+    font-size: clamp(1.1rem, 3vw, 1.22rem);
+    font-weight: 400;
+    color: #2a1f0e;
+    line-height: 2.15;
     text-align: justify;
   }
 
-  .cap-texto p { margin-bottom: 24px; }
+  .cap-texto p { margin-bottom: 26px; }
 
   .verso-destacado {
-    font-size: clamp(1.02rem, 3vw, 1.17rem);
+    font-size: clamp(1.08rem, 3vw, 1.2rem);
     font-style: italic;
-    color: #8a6520;
+    font-weight: 400;
+    color: #7a5515;
     text-align: center;
     margin: 44px 0;
-    padding: 28px 38px;
-    line-height: 2.1;
-    border-left: 1.5px solid rgba(160,110,40,0.3);
-    border-right: 1.5px solid rgba(160,110,40,0.3);
-    background: rgba(160,110,40,0.04);
+    padding: 30px 40px;
+    line-height: 2.15;
+    border-left: 2px solid rgba(138,101,32,0.4);
+    border-right: 2px solid rgba(138,101,32,0.4);
+    background: rgba(138,101,32,0.05);
+    border-radius: 2px;
   }
 
   .palabra-especial {
-    color: #8a6520;
+    color: #7a5515;
     font-style: italic;
+    font-weight: 600;
   }
 
   /* ---- CIERRE ---- */
   .cierre {
     text-align: center;
     padding: 72px 20px 64px;
-    border-top: 1px solid rgba(160,110,40,0.16);
+    border-top: 1px solid rgba(138,101,32,0.2);
     margin-top: 30px;
     opacity: 0;
     animation: fadeUp 1.4s ease 1s forwards;
   }
 
   .firma {
-    font-size: 1.08rem;
-    font-weight: 300;
+    font-size: 1.15rem;
+    font-weight: 400;
     font-style: italic;
-    color: rgba(138,101,32,0.55);
+    color: #9a7530;
     line-height: 2.4;
     margin-top: 30px;
   }
@@ -176,8 +178,9 @@
   .capitulo:nth-child(7) { animation-delay: 1.5s; }
 
   @media (max-width: 500px) {
-    .book-wrapper { padding: 40px 20px 80px; }
-    .verso-destacado { padding: 22px 16px; }
+    .book-wrapper { padding: 40px 22px 80px; }
+    .verso-destacado { padding: 24px 18px; }
+    .cap-texto { font-size: 1.12rem; line-height: 2.05; }
   }
 </style>
 </head>
@@ -193,15 +196,15 @@
     <h1 class="titulo-libro">De lo que estoy<br>hecho cuando<br>pienso en ti</h1>
 
     <svg class="ornamento" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="14" cy="14" r="1.5" fill="#8a6520"/>
-      <line x1="14" y1="2" x2="14" y2="8" stroke="#8a6520" stroke-width="0.8"/>
-      <line x1="14" y1="20" x2="14" y2="26" stroke="#8a6520" stroke-width="0.8"/>
-      <line x1="2" y1="14" x2="8" y2="14" stroke="#8a6520" stroke-width="0.8"/>
-      <line x1="20" y1="14" x2="26" y2="14" stroke="#8a6520" stroke-width="0.8"/>
-      <line x1="5.5" y1="5.5" x2="9.5" y2="9.5" stroke="#8a6520" stroke-width="0.6"/>
-      <line x1="18.5" y1="18.5" x2="22.5" y2="22.5" stroke="#8a6520" stroke-width="0.6"/>
-      <line x1="22.5" y1="5.5" x2="18.5" y2="9.5" stroke="#8a6520" stroke-width="0.6"/>
-      <line x1="9.5" y1="18.5" x2="5.5" y2="22.5" stroke="#8a6520" stroke-width="0.6"/>
+      <circle cx="14" cy="14" r="1.5" fill="#9a7530"/>
+      <line x1="14" y1="2" x2="14" y2="8" stroke="#9a7530" stroke-width="0.9"/>
+      <line x1="14" y1="20" x2="14" y2="26" stroke="#9a7530" stroke-width="0.9"/>
+      <line x1="2" y1="14" x2="8" y2="14" stroke="#9a7530" stroke-width="0.9"/>
+      <line x1="20" y1="14" x2="26" y2="14" stroke="#9a7530" stroke-width="0.9"/>
+      <line x1="5.5" y1="5.5" x2="9.5" y2="9.5" stroke="#9a7530" stroke-width="0.7"/>
+      <line x1="18.5" y1="18.5" x2="22.5" y2="22.5" stroke="#9a7530" stroke-width="0.7"/>
+      <line x1="22.5" y1="5.5" x2="18.5" y2="9.5" stroke="#9a7530" stroke-width="0.7"/>
+      <line x1="9.5" y1="18.5" x2="5.5" y2="22.5" stroke="#9a7530" stroke-width="0.7"/>
     </svg>
 
     <p class="dedicatoria">
@@ -324,15 +327,15 @@
     </div>
 
     <svg class="ornamento" style="margin:40px auto;" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="14" cy="14" r="1.5" fill="#8a6520"/>
-      <line x1="14" y1="2" x2="14" y2="8" stroke="#8a6520" stroke-width="0.8"/>
-      <line x1="14" y1="20" x2="14" y2="26" stroke="#8a6520" stroke-width="0.8"/>
-      <line x1="2" y1="14" x2="8" y2="14" stroke="#8a6520" stroke-width="0.8"/>
-      <line x1="20" y1="14" x2="26" y2="14" stroke="#8a6520" stroke-width="0.8"/>
-      <line x1="5.5" y1="5.5" x2="9.5" y2="9.5" stroke="#8a6520" stroke-width="0.6"/>
-      <line x1="18.5" y1="18.5" x2="22.5" y2="22.5" stroke="#8a6520" stroke-width="0.6"/>
-      <line x1="22.5" y1="5.5" x2="18.5" y2="9.5" stroke="#8a6520" stroke-width="0.6"/>
-      <line x1="9.5" y1="18.5" x2="5.5" y2="22.5" stroke="#8a6520" stroke-width="0.6"/>
+      <circle cx="14" cy="14" r="1.5" fill="#9a7530"/>
+      <line x1="14" y1="2" x2="14" y2="8" stroke="#9a7530" stroke-width="0.9"/>
+      <line x1="14" y1="20" x2="14" y2="26" stroke="#9a7530" stroke-width="0.9"/>
+      <line x1="2" y1="14" x2="8" y2="14" stroke="#9a7530" stroke-width="0.9"/>
+      <line x1="20" y1="14" x2="26" y2="14" stroke="#9a7530" stroke-width="0.9"/>
+      <line x1="5.5" y1="5.5" x2="9.5" y2="9.5" stroke="#9a7530" stroke-width="0.7"/>
+      <line x1="18.5" y1="18.5" x2="22.5" y2="22.5" stroke="#9a7530" stroke-width="0.7"/>
+      <line x1="22.5" y1="5.5" x2="18.5" y2="9.5" stroke="#9a7530" stroke-width="0.7"/>
+      <line x1="9.5" y1="18.5" x2="5.5" y2="22.5" stroke="#9a7530" stroke-width="0.7"/>
     </svg>
 
     <p class="firma">
@@ -357,16 +360,15 @@ function resize() {
 resize();
 window.addEventListener('resize', resize);
 
-// Partículas doradas sutiles sobre fondo blanco
 const particles = [];
-for (let i = 0; i < 55; i++) {
+for (let i = 0; i < 50; i++) {
   particles.push({
     x: Math.random(),
     y: Math.random(),
-    r: 0.6 + Math.random() * 1.8,
-    alpha: 0.06 + Math.random() * 0.18,
-    speed: 0.002 + Math.random() * 0.005,
-    drift: (Math.random() - 0.5) * 0.0003,
+    r: 0.8 + Math.random() * 2,
+    alpha: 0.05 + Math.random() * 0.13,
+    speed: 0.0015 + Math.random() * 0.004,
+    drift: (Math.random() - 0.5) * 0.0002,
     offset: Math.random() * Math.PI * 2
   });
 }
@@ -376,15 +378,15 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   t += 0.016;
   particles.forEach(p => {
-    p.y -= p.speed * 0.4;
+    p.y -= p.speed;
     p.x += p.drift;
     if (p.y < -0.02) p.y = 1.02;
     if (p.x < -0.02) p.x = 1.02;
     if (p.x > 1.02) p.x = -0.02;
-    const a = p.alpha * (0.5 + 0.5 * Math.sin(t * 0.8 + p.offset));
+    const a = p.alpha * (0.5 + 0.5 * Math.sin(t * 0.7 + p.offset));
     ctx.beginPath();
     ctx.arc(p.x * canvas.width, p.y * canvas.height, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(160, 110, 40, ${a})`;
+    ctx.fillStyle = `rgba(154, 117, 48, ${a})`;
     ctx.fill();
   });
   requestAnimationFrame(draw);
