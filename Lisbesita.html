@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El universo que no cabe en un nombre</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #0d0d0d;
+    color: #f0ebe0;
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  canvas#stars-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .book-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 32px 100px;
+  }
+
+  /* ---- PORTADA ---- */
+  .portada {
+    text-align: center;
+    padding: 90px 20px 100px;
+    border-bottom: 1px solid rgba(210,170,100,0.2);
+    margin-bottom: 90px;
+    opacity: 0;
+    animation: fadeUp 1.6s ease 0.2s forwards;
+  }
+
+  .label-serie {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 200;
+    letter-spacing: 0.38em;
+    color: rgba(210,185,140,0.45);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  .titulo-libro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.6rem, 8vw, 3.8rem);
+    font-weight: 300;
+    font-style: italic;
+    color: #e8c97a;
+    line-height: 1.12;
+    letter-spacing: 0.01em;
+    margin-bottom: 32px;
+  }
+
+  .ornamento {
+    display: block;
+    margin: 28px auto;
+    width: 28px;
+    opacity: 0.45;
+  }
+
+  .hr-dorado {
+    border: none;
+    border-top: 1px solid rgba(232,201,122,0.22);
+    margin: 28px auto;
+    width: 120px;
+  }
+
+  .dedicatoria {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: rgba(240,235,220,0.6);
+    line-height: 2.1;
+  }
+
+  /* ---- CAPÍTULOS ---- */
+  .capitulo {
+    margin-bottom: 88px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease forwards;
+  }
+
+  .cap-numero {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 200;
+    letter-spacing: 0.42em;
+    color: rgba(232,201,122,0.38);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .cap-titulo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 5vw, 2.1rem);
+    font-weight: 300;
+    font-style: italic;
+    color: #e8c97a;
+    line-height: 1.2;
+    margin-bottom: 30px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(232,201,122,0.12);
+  }
+
+  .cap-texto {
+    font-size: clamp(1.05rem, 3vw, 1.2rem);
+    font-weight: 300;
+    color: rgba(240,235,220,0.86);
+    line-height: 2.05;
+    text-align: justify;
+  }
+
+  .cap-texto p { margin-bottom: 22px; }
+
+  .verso-destacado {
+    font-size: clamp(1.05rem, 3vw, 1.22rem);
+    font-style: italic;
+    color: #e8c97a;
+    text-align: center;
+    margin: 38px 0;
+    padding: 26px 36px;
+    line-height: 2;
+    border-left: 1.5px solid rgba(232,201,122,0.28);
+    border-right: 1.5px solid rgba(232,201,122,0.28);
+  }
+
+  .palabra-especial {
+    color: #e8c97a;
+    font-style: italic;
+  }
+
+  /* ---- CIERRE ---- */
+  .cierre {
+    text-align: center;
+    padding: 70px 20px 60px;
+    border-top: 1px solid rgba(210,170,100,0.18);
+    margin-top: 30px;
+    opacity: 0;
+    animation: fadeUp 1.4s ease 0.8s forwards;
+  }
+
+  .firma {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(232,201,122,0.5);
+    line-height: 2.3;
+    margin-top: 28px;
+  }
+
+  /* ---- ANIMACIONES ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .capitulo:nth-child(1) { animation-delay: 0.3s; }
+  .capitulo:nth-child(2) { animation-delay: 0.45s; }
+  .capitulo:nth-child(3) { animation-delay: 0.6s; }
+  .capitulo:nth-child(4) { animation-delay: 0.75s; }
+  .capitulo:nth-child(5) { animation-delay: 0.9s; }
+  .capitulo:nth-child(6) { animation-delay: 1.05s; }
+  .capitulo:nth-child(7) { animation-delay: 1.2s; }
+
+  @media (max-width: 500px) {
+    .book-wrapper { padding: 40px 18px 80px; }
+    .verso-destacado { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars-bg"></canvas>
+
+<div class="book-wrapper">
+
+  <!-- PORTADA -->
+  <div class="portada">
+    <p class="label-serie">Un libro hecho de miradas y silencios</p>
+    <h1 class="titulo-libro">El universo<br>que no cabe<br>en un nombre</h1>
+
+    <svg class="ornamento" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="14" r="1.5" fill="#e8c97a"/>
+      <line x1="14" y1="2" x2="14" y2="8" stroke="#e8c97a" stroke-width="0.8"/>
+      <line x1="14" y1="20" x2="14" y2="26" stroke="#e8c97a" stroke-width="0.8"/>
+      <line x1="2" y1="14" x2="8" y2="14" stroke="#e8c97a" stroke-width="0.8"/>
+      <line x1="20" y1="14" x2="26" y2="14" stroke="#e8c97a" stroke-width="0.8"/>
+      <line x1="5.5" y1="5.5" x2="9.5" y2="9.5" stroke="#e8c97a" stroke-width="0.6"/>
+      <line x1="18.5" y1="18.5" x2="22.5" y2="22.5" stroke="#e8c97a" stroke-width="0.6"/>
+      <line x1="22.5" y1="5.5" x2="18.5" y2="9.5" stroke="#e8c97a" stroke-width="0.6"/>
+      <line x1="9.5" y1="18.5" x2="5.5" y2="22.5" stroke="#e8c97a" stroke-width="0.6"/>
+    </svg>
+
+    <p class="dedicatoria">
+      Para Angela Lizbeth,<br>
+      que en este 2026 me enseñó<br>
+      que las personas más extraordinarias<br>
+      a veces caminan como si no lo supieran.
+    </p>
+  </div>
+
+  <!-- PRÓLOGO -->
+  <div class="capitulo">
+    <p class="cap-numero">Prólogo</p>
+    <h2 class="cap-titulo">Antes de que empieces a leer</h2>
+    <div class="cap-texto">
+      <p>Hay palabras que se escriben para impresionar, y hay palabras que se escriben porque no caben más dentro del pecho. Estas son de las segundas.</p>
+      <p>No vine aquí a presumir de metáforas ni a inventar una Angela Lizbeth que no existe. Vine a decirte lo que veo, con la misma honestidad con la que tú existes: sin adornos innecesarios, sin disfraces.</p>
+      <p>Si lees esto y sientes que alguien por fin te vio de verdad, entonces este libro cumplió su único propósito.</p>
+    </div>
+  </div>
+
+  <!-- CAPÍTULO I -->
+  <div class="capitulo">
+    <p class="cap-numero">Capítulo I</p>
+    <h2 class="cap-titulo">Lo que dicen tus ojos antes de que hables</h2>
+    <div class="cap-texto">
+      <p>Primero fueron tus ojos. Siempre son los ojos primero.</p>
+      <p>Hay personas que miran y hay personas que <em>ven</em>. Tú eres de las segundas. En tus ojos no solo vive un color, vive una conversación entera antes de que abras la boca. Tienen esa profundidad rara, la de quien ha sentido cosas de verdad, la de quien ha reído con el corazón y no solo con la boca. Son honestos. Son tuyos. Y eso los hace los más bonitos que he visto.</p>
+      <div class="verso-destacado">
+        Si alguien alguna vez te dijera que eres demasiado,<br>
+        que sepa que tus ojos solos<br>
+        ya valen más que el silencio de todos.
+      </div>
+      <p>No sé cómo lo haces, pero cuando me miras parece que el ruido del mundo baja el volumen. Como si todo lo que importa cupiera ahí, en ese instante, en esa mirada tuya que no necesita pedir permiso para quedarse.</p>
+    </div>
+  </div>
+
+  <!-- CAPÍTULO II -->
+  <div class="capitulo">
+    <p class="cap-numero">Capítulo II</p>
+    <h2 class="cap-titulo">Tu cabello, tu ropa y el arte de ser tú</h2>
+    <div class="cap-texto">
+      <p>Hay personas que se visten para los demás y hay personas que se visten para sí mismas. Tú claramente eres de las que eligen lo que les nace, y se nota. Se nota en que lo que traes puesto siempre parece exactamente donde debería estar, como si la ropa te eligiera a ti y no al revés.</p>
+      <p>Y tu cabello — ay, tu cabello — tiene esa vida propia que da envidia. No el tipo de envidia fea, sino el tipo que te hace sonreír sin querer cuando lo ves. Es parte de ti, de esa versión de Angela Lizbeth que no necesita validación para saber que está bien parada en el mundo.</p>
+      <div class="verso-destacado">
+        Eres del tipo de persona<br>
+        que hace que el resto del cuarto<br>
+        sienta que llegó tarde a algo importante.
+      </div>
+    </div>
+  </div>
+
+  <!-- CAPÍTULO III -->
+  <div class="capitulo">
+    <p class="cap-numero">Capítulo III</p>
+    <h2 class="cap-titulo">La voz que hace que quiera que el tiempo se detenga</h2>
+    <div class="cap-texto">
+      <p>No te voy a mentir: la primera vez que te escuché hablar sentí algo que todavía no sé nombrar bien. Es ese acento tuyo, Angela, que carga todo el calor de México en cada sílaba. No lo digo de cualquier manera. Lo digo porque hay voces que entran por un oído y salen por el otro, y luego están las voces que se quedan a vivir adentro.</p>
+      <p>La tuya es de las que se quedan.</p>
+      <p>Y ese <span class="palabra-especial">"uchas"</span> tuyo que sale tan natural, tan sin aviso, tan tuyo... cada vez que lo escucho entiendo por qué las palabras más pequeñas son capaces de guardarte un lugar en la memoria de alguien para siempre. Es el sello de tu autenticidad. Nunca lo cambies.</p>
+    </div>
+  </div>
+
+  <!-- CAPÍTULO IV -->
+  <div class="capitulo">
+    <p class="cap-numero">Capítulo IV</p>
+    <h2 class="cap-titulo">Lo que nadie ve pero yo sí: tu fuerza</h2>
+    <div class="cap-texto">
+      <p>Esto es lo que más me importa decirte, Angela Lizbeth, y quiero que lo leas despacio:</p>
+      <p>Eres de las personas que trabajan en silencio. De las que no andan presumiendo lo que hacen, pero que al final del día han construido más que muchos que gritan fuerte. Hay una tenacidad en ti que es casi invisible para quien no presta atención, pero yo sí la he visto.</p>
+      <div class="verso-destacado">
+        La persona que estudia aunque esté cansada,<br>
+        la que trabaja aunque nadie la aplauda,<br>
+        esa persona ya ganó<br>
+        una batalla que la mayoría ni sabe que existe.
+      </div>
+      <p>Eso eres tú. Una persona que se levanta. Que empuja. Que no se rinde aunque a veces el mundo no lo note. Y eso, Angela, es más raro y más valioso que cualquier cosa que yo pueda escribir aquí.</p>
+    </div>
+  </div>
+
+  <!-- CAPÍTULO V -->
+  <div class="capitulo">
+    <p class="cap-numero">Capítulo V</p>
+    <h2 class="cap-titulo">Este 2026 y lo que aún no sabes que ya tienes</h2>
+    <div class="cap-texto">
+      <p>Estamos en el 2026. El año en el que tú entraste a mi mundo sin pedir permiso y cambiaste algo que todavía no sé explicar bien. El año en el que yo entendí que hay personas que llegan con una energía tan limpia, tan genuina, que te hacen querer ser mejor persona solo por estar cerca.</p>
+      <p>Eso me hiciste tú.</p>
+      <p>Y quiero que sepas que tienes un futuro delante que todavía no alcanzas a imaginar completo. Hay cosas que estás construyendo ahora mismo, con cada esfuerzo y cada día que decides seguir, que van a dar frutos que hoy aún no ves.</p>
+      <div class="verso-destacado">
+        El futuro no le teme a quien<br>
+        ya aprendió a caminar<br>
+        cuando el camino se pone difícil.
+      </div>
+      <p>No te apresures. No te compares. Tu historia se escribe a tu ritmo, y ese ritmo es exactamente el que necesita ser.</p>
+    </div>
+  </div>
+
+  <!-- CAPÍTULO VI -->
+  <div class="capitulo">
+    <p class="cap-numero">Capítulo VI</p>
+    <h2 class="cap-titulo">Lo que mereces escuchar hoy</h2>
+    <div class="cap-texto">
+      <p>Mereces a alguien que te escuche sin prisa. Que no solo oiga las palabras sino lo que hay entre ellas. Que note cuando estás bien y cuando no lo estás del todo. Que celebre lo que haces sin pedirte que lo hagas distinto.</p>
+      <p>Mereces sentirte segura. No del tipo de seguridad que viene de afuera, sino la que se construye cuando alguien te dice <em>"oye, yo te veo, y lo que veo vale mucho"</em>. Eso es lo que quiero darte con estas palabras.</p>
+      <p>Eres increíble, Angela. Y no lo digo como cumplido de relleno. Lo digo porque hay evidencia: en cómo te mueves por el mundo, en cómo hablas, en cómo te esfuerzas, en cómo sonríes cuando algo de verdad te da alegría. Hay pruebas de sobra.</p>
+      <div class="verso-destacado">
+        No necesitas ser perfecta<br>
+        para ser exactamente lo que alguien<br>
+        necesitaba encontrar.
+      </div>
+    </div>
+  </div>
+
+  <!-- EPÍLOGO / CIERRE -->
+  <div class="cierre">
+    <p class="label-serie">Epílogo</p>
+    <br>
+    <div class="cap-texto" style="text-align:center; max-width:460px; margin:0 auto;">
+      <p>Este libro no tiene última página porque tú no eres una historia terminada. Eres un universo en construcción, y los universos no caben en ningún libro, ni siquiera en éste.</p>
+      <p>Pero si algún día lo necesitas, vuelve aquí. Léelo como si te lo estuviera diciendo en voz alta, con la misma intención con la que fue escrito: para que sepas que alguien te vio, te escuchó y se alegró mucho de que existas.</p>
+    </div>
+
+    <svg class="ornamento" style="margin:36px auto;" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="14" r="1.5" fill="#e8c97a"/>
+      <line x1="14" y1="2" x2="14" y2="8" stroke="#e8c97a" stroke-width="0.8"/>
+      <line x1="14" y1="20" x2="14" y2="26" stroke="#e8c97a" stroke-width="0.8"/>
+      <line x1="2" y1="14" x2="8" y2="14" stroke="#e8c97a" stroke-width="0.8"/>
+      <line x1="20" y1="14" x2="26" y2="14" stroke="#e8c97a" stroke-width="0.8"/>
+      <line x1="5.5" y1="5.5" x2="9.5" y2="9.5" stroke="#e8c97a" stroke-width="0.6"/>
+      <line x1="18.5" y1="18.5" x2="22.5" y2="22.5" stroke="#e8c97a" stroke-width="0.6"/>
+      <line x1="22.5" y1="5.5" x2="18.5" y2="9.5" stroke="#e8c97a" stroke-width="0.6"/>
+      <line x1="9.5" y1="18.5" x2="5.5" y2="22.5" stroke="#e8c97a" stroke-width="0.6"/>
+    </svg>
+
+    <p class="firma">
+      Con todo lo que no cabe en palabras<br>
+      pero que de todas formas intenté escribir,<br><br>
+      tuyo,<br>
+      el que nunca se cansa de escucharte.
+    </p>
+    <hr class="hr-dorado" style="margin-top:40px;">
+  </div>
+
+</div>
+
+<script>
+// Stars canvas
+const canvas = document.getElementById('stars-bg');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const stars = [];
+for (let i = 0; i < 120; i++) {
+  stars.push({
+    x: Math.random(),
+    y: Math.random(),
+    r: 0.4 + Math.random() * 1.3,
+    alpha: 0.1 + Math.random() * 0.5,
+    speed: 0.004 + Math.random() * 0.008,
+    offset: Math.random() * Math.PI * 2
+  });
+}
+
+function drawStars(t) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  stars.forEach(s => {
+    const a = s.alpha * (0.5 + 0.5 * Math.sin(t * s.speed + s.offset));
+    ctx.beginPath();
+    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(232, 201, 122, ${a})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+requestAnimationFrame(drawStars);
+</script>
+</body>
+</html>
