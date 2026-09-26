@@ -2,813 +2,225 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lo que el silencio guarda de ti</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El jardín que crece cuando pienso en ti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-snap-type:none}
+html{scroll-behavior:smooth}
 :root{
-  --negro:#0a0804;
-  --negro2:#110e08;
-  --tinta:#1c1508;
-  --oro:#d4a843;
-  --oro2:#f0c060;
-  --oro3:#8a6520;
-  --crema:#f5ead0;
-  --crema2:#e8d5a8;
-  --rojo:#8b2020;
+  --noche:#131a2b;
+  --noche2:#1b2438;
+  --musgo:#7a9b76;
+  --musgo2:#5c7a58;
+  --arcilla:#d9a5a0;
+  --arcilla2:#c98d87;
+  --luna:#f2ead9;
+  --luna-dim:rgba(242,234,217,.62);
+  --luz:#f7d998;
 }
 body{
-  background:var(--negro);
-  color:var(--crema);
-  font-family:'EB Garamond',serif;
+  background:var(--noche);
+  color:var(--luna);
+  font-family:'Inter',sans-serif;
+  font-weight:300;
   overflow-x:hidden;
-  cursor:none;
 }
+::selection{background:var(--arcilla);color:var(--noche)}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:400;color:var(--luna)}
 
-/* ============ CURSOR ============ */
-#cur{width:6px;height:6px;background:var(--oro2);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
-#cur2{width:36px;height:36px;border:1px solid rgba(212,168,67,.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .14s ease,top .14s ease,transform .3s,border-color .3s}
-body:hover #cur2{border-color:rgba(212,168,67,.7)}
+/* firefly cursor */
+#firefly{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--luz);
+  box-shadow:0 0 12px 4px rgba(247,217,152,.7),0 0 30px 10px rgba(247,217,152,.25);
+  pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:left .5s cubic-bezier(.2,.8,.2,1),top .5s cubic-bezier(.2,.8,.2,1);}
 
-/* ============ LOADER ============ */
-#loader{
-  position:fixed;inset:0;background:var(--negro);z-index:10000;
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:20px;
-  transition:opacity .8s ease, visibility .8s ease;
-}
-#loader.gone{opacity:0;visibility:hidden}
-.loader-titulo{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.4rem,4vw,2.2rem);
-  font-style:italic;
-  color:var(--oro);
-  opacity:0;
-  animation:loaderFade 1s ease .3s forwards;
-}
-.loader-linea{
-  width:0;height:1px;background:var(--oro);
-  animation:loaderLine 1.4s ease .5s forwards;
-}
-@keyframes loaderFade{to{opacity:1}}
-@keyframes loaderLine{to{width:200px}}
+/* background stars */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
 
-/* ============ PROGRESS ============ */
-#prog{position:fixed;left:0;top:0;height:2px;width:0;background:linear-gradient(90deg,var(--rojo),var(--oro),var(--oro2));z-index:1000;transition:width .08s linear}
+/* the vine */
+#vine-wrap{position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);z-index:1}
+#vine{position:absolute;left:0;top:0;width:100%;height:100%}
+#vine path{fill:none;stroke:var(--musgo);stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:1;stroke-dashoffset:1;vector-effect:non-scaling-stroke;}
 
-/* ============ NAV LATERAL ============ */
-#nav-lateral{
-  position:fixed;right:28px;top:50%;transform:translateY(-50%);
-  z-index:100;display:flex;flex-direction:column;gap:10px;
-  opacity:0;animation:fadeIn 1s ease 2.5s forwards;
-}
-.nav-dot{
-  width:6px;height:6px;border-radius:50%;border:1px solid rgba(212,168,67,.4);
-  cursor:pointer;transition:all .3s;background:transparent;
-}
-.nav-dot.active{background:var(--oro);border-color:var(--oro);transform:scale(1.3)}
-.nav-dot:hover{border-color:var(--oro);background:rgba(212,168,67,.3)}
+/* layout */
+main{position:relative;z-index:2}
+.seccion{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 24px;position:relative}
 
-/* ============ SECCIONES ============ */
-.seccion{
-  min-height:100vh;position:relative;overflow:hidden;
-  display:flex;align-items:center;
-}
+/* hero */
+#hero{flex-direction:column;text-align:center;gap:28px}
+.hero-eyebrow{font-family:'Fraunces',serif;font-style:italic;font-size:1rem;color:var(--luna-dim)}
+.flor-hero{width:min(260px,60vw);height:auto;opacity:0}
+#hero h1{font-size:clamp(2.1rem,6vw,3.6rem);line-height:1.15;max-width:14ch}
+.hero-sub{max-width:38ch;color:var(--luna-dim);line-height:1.8;font-size:1.02rem}
+.scroll-hint{margin-top:18px;font-size:.75rem;letter-spacing:.15em;color:var(--musgo);opacity:.8}
+.scroll-hint span{display:inline-block;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
-/* ============ PORTADA ============ */
-#portada{
-  background:var(--negro);
-  padding:0;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  min-height:100vh;
-}
-.portada-izq{
-  background:var(--negro2);
-  display:flex;flex-direction:column;
-  justify-content:flex-end;padding:60px 48px;
-  position:relative;overflow:hidden;
-  border-right:1px solid rgba(212,168,67,.15);
-}
-.portada-izq::before{
-  content:'';position:absolute;top:-100px;left:-100px;
-  width:400px;height:400px;
-  background:radial-gradient(circle,rgba(212,168,67,.06) 0%,transparent 70%);
-  animation:pulso 6s ease-in-out infinite;
-}
-@keyframes pulso{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-.portada-num-grande{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(12rem,25vw,22rem);
-  font-weight:900;color:transparent;
-  -webkit-text-stroke:1px rgba(212,168,67,.08);
-  line-height:.8;
-  position:absolute;bottom:-40px;left:-20px;
-  user-select:none;pointer-events:none;
-}
-.portada-eyebrow{
-  font-family:'Montserrat',sans-serif;
-  font-size:.6rem;font-weight:200;
-  letter-spacing:.5em;color:var(--oro3);
-  text-transform:uppercase;margin-bottom:24px;
-  opacity:0;animation:slideR .9s ease 1.8s forwards;
-}
-.portada-titulo{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2.4rem,5.5vw,4.2rem);
-  font-weight:700;font-style:italic;
-  color:var(--crema);line-height:1.05;
-  opacity:0;animation:slideR 1s ease 2s forwards;
-}
-.portada-titulo span{color:var(--oro);display:block}
-.portada-linea-deco{
-  width:48px;height:2px;background:var(--oro);
-  margin:28px 0;
-  opacity:0;animation:slideR .8s ease 2.2s forwards;
-}
-.portada-dedicatoria{
-  font-size:clamp(.95rem,2vw,1.1rem);
-  font-style:italic;color:rgba(245,234,208,.55);
-  line-height:2.1;max-width:340px;
-  opacity:0;animation:slideR 1s ease 2.4s forwards;
-}
+/* flower blocks alternate left/right */
+.flor-block{max-width:460px;width:100%;opacity:0;transform:translateY(26px);
+  transition:opacity 1s ease, transform 1s ease;}
+.flor-block.vis{opacity:1;transform:translateY(0)}
+.flor-block.izq{margin-right:auto;text-align:left;padding-right:8vw}
+.flor-block.der{margin-left:auto;text-align:right;padding-left:8vw}
+.flor-svg{width:56px;height:56px;margin-bottom:18px;opacity:0;transform:scale(.3);
+  transition:opacity .9s ease .2s, transform .9s cubic-bezier(.34,1.56,.64,1) .2s}
+.flor-block.der .flor-svg{margin-left:auto}
+.flor-block.vis .flor-svg{opacity:1;transform:scale(1)}
+.flor-block h2{font-size:clamp(1.5rem,3.4vw,2rem);font-style:italic;margin-bottom:16px;line-height:1.3}
+.flor-block p{color:var(--luna-dim);line-height:1.9;font-size:1rem}
+.flor-block .verso{margin-top:18px;font-family:'Fraunces',serif;font-style:italic;color:var(--arcilla);font-size:1.05rem;line-height:1.7}
 
-.portada-der{
-  display:flex;flex-direction:column;
-  justify-content:center;align-items:flex-end;
-  padding:80px 56px 80px 40px;position:relative;
-}
-.portada-año{
-  font-family:'Montserrat',sans-serif;
-  font-size:.55rem;font-weight:200;
-  letter-spacing:.6em;color:rgba(212,168,67,.35);
-  text-transform:uppercase;
-  writing-mode:vertical-rl;
-  position:absolute;right:20px;top:50%;
-  transform:translateY(-50%) rotate(180deg);
-  opacity:0;animation:fadeIn 1s ease 2.8s forwards;
-}
-.portada-ornamento{
-  opacity:0;animation:fadeIn 1.5s ease 1.5s forwards;
-  margin-bottom:32px;
-}
-.portada-subtitulo-der{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1rem,2.5vw,1.4rem);
-  font-style:italic;
-  color:rgba(245,234,208,.3);
-  line-height:1.8;text-align:right;
-  opacity:0;animation:fadeIn 1.2s ease 2.6s forwards;
-}
+/* section labels (only where sequence truly applies - chapters) */
+.marca{font-size:.7rem;letter-spacing:.14em;color:var(--musgo);margin-bottom:10px;text-transform:lowercase}
 
-/* ============ CAPÍTULOS ============ */
-.cap{
-  min-height:100vh;
-  display:grid;
-  grid-template-columns:120px 1fr;
-  position:relative;
-  overflow:hidden;
-  opacity:0;transform:translateY(60px);
-  transition:opacity 1s ease,transform 1s ease;
-}
-.cap.vis{opacity:1;transform:translateY(0)}
+/* closing */
+#cierre{flex-direction:column;text-align:center;gap:22px;padding-bottom:140px}
+.luna-svg{width:70px;opacity:.9;margin-bottom:6px}
+#cierre h2{font-size:clamp(1.8rem,4.4vw,2.6rem);max-width:16ch;font-style:italic}
+#cierre p{max-width:42ch;color:var(--luna-dim);line-height:1.9}
+.firma{margin-top:20px;font-family:'Fraunces',serif;font-style:italic;color:var(--arcilla);font-size:1.15rem;line-height:2}
 
-.cap-lateral{
-  background:rgba(212,168,67,.04);
-  border-right:1px solid rgba(212,168,67,.1);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:40px 0;position:relative;overflow:hidden;
+/* responsive */
+@media(max-width:640px){
+  #vine-wrap{left:24px;transform:none}
+  .flor-block.izq,.flor-block.der{margin:0;text-align:left;padding:0 0 0 40px;max-width:100%}
+  .flor-block .verso{text-align:left}
+  #firefly{display:none}
 }
-.cap-lateral-num{
-  font-family:'Playfair Display',serif;
-  font-size:7rem;font-weight:900;
-  color:rgba(212,168,67,.06);
-  line-height:1;user-select:none;
-  writing-mode:vertical-rl;
-  position:absolute;
-}
-.cap-lateral-tag{
-  font-family:'Montserrat',sans-serif;
-  font-size:.5rem;font-weight:300;
-  letter-spacing:.5em;color:var(--oro3);
-  text-transform:uppercase;
-  writing-mode:vertical-rl;
-  transform:rotate(180deg);
-  z-index:1;
-}
-.cap-lateral-linea{
-  position:absolute;left:50%;top:0;
-  width:1px;height:0;
-  background:linear-gradient(to bottom,transparent,var(--oro),transparent);
-  transition:height 1.4s ease .3s;
-}
-.cap.vis .cap-lateral-linea{height:100%}
-
-.cap-cuerpo{
-  padding:80px 72px 80px 56px;
-  display:flex;flex-direction:column;
-  justify-content:center;
-  position:relative;
-}
-
-.cap-titulo-grande{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2rem,5vw,3.4rem);
-  font-weight:400;font-style:italic;
-  color:var(--crema);
-  line-height:1.1;
-  margin-bottom:48px;
-  position:relative;
-  overflow:hidden;
-}
-.cap-titulo-grande::after{
-  content:'';position:absolute;
-  bottom:0;left:0;height:1px;
-  width:0;background:var(--oro);
-  transition:width 1.2s ease .5s;
-}
-.cap.vis .cap-titulo-grande::after{width:100px}
-
-/* Números ENORMES decorativos de fondo */
-.cap-bg-num{
-  position:absolute;right:-20px;top:50%;
-  transform:translateY(-50%);
-  font-family:'Playfair Display',serif;
-  font-size:clamp(16rem,30vw,28rem);
-  font-weight:900;color:transparent;
-  -webkit-text-stroke:1px rgba(212,168,67,.04);
-  line-height:1;user-select:none;pointer-events:none;
-  transition:transform 1.5s ease;
-}
-.cap:hover .cap-bg-num{transform:translateY(-50%) scale(1.03)}
-
-.cap-texto{
-  font-size:clamp(1.05rem,2.2vw,1.18rem);
-  font-weight:400;
-  color:rgba(245,234,208,.75);
-  line-height:2.2;
-  max-width:600px;
-}
-.cap-texto p{margin-bottom:28px}
-.cap-texto p:hover{color:rgba(245,234,208,.95);transition:color .4s}
-
-/* ============ VERSO ============ */
-.verso{
-  margin:52px 0;
-  padding:0 0 0 28px;
-  border-left:2px solid var(--oro);
-  position:relative;
-  max-width:520px;
-}
-.verso::before{
-  content:'"';
-  font-family:'Playfair Display',serif;
-  font-size:5rem;color:rgba(212,168,67,.12);
-  position:absolute;top:-20px;left:-10px;
-  line-height:1;
-}
-.verso-texto{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.1rem,2.5vw,1.35rem);
-  font-style:italic;font-weight:400;
-  color:var(--crema2);
-  line-height:1.9;
-}
-.verso-linea-ani{
-  position:absolute;left:-1px;top:0;
-  width:2px;height:0;background:var(--oro2);
-  transition:height 1.2s ease .4s;
-}
-.cap.vis .verso-linea-ani{height:100%}
-
-/* ============ SEPARADORES DRAMÁTICOS ============ */
-.sep-drama{
-  height:180px;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
-  opacity:0;transition:opacity 1.2s ease;
-}
-.sep-drama.vis{opacity:1}
-.sep-drama-inner{
-  display:flex;align-items:center;gap:24px;
-  z-index:1;
-}
-.sep-linea-l,.sep-linea-r{
-  height:1px;background:linear-gradient(to right,transparent,rgba(212,168,67,.4));
-  transition:width 1.4s ease .3s;width:0;
-}
-.sep-linea-r{background:linear-gradient(to left,transparent,rgba(212,168,67,.4))}
-.sep-drama.vis .sep-linea-l,.sep-drama.vis .sep-linea-r{width:120px}
-.sep-drama-txt{
-  font-family:'Montserrat',sans-serif;
-  font-size:.5rem;font-weight:200;
-  letter-spacing:.6em;color:rgba(212,168,67,.4);
-  text-transform:uppercase;white-space:nowrap;
-}
-.sep-drama-bg{
-  position:absolute;
-  font-family:'Playfair Display',serif;
-  font-size:8rem;font-weight:900;color:transparent;
-  -webkit-text-stroke:1px rgba(212,168,67,.03);
-  user-select:none;
-}
-
-/* ============ CAPÍTULO ALTERNADO (texto a la izquierda num a la derecha) ============ */
-.cap.inverso{grid-template-columns:1fr 120px}
-.cap.inverso .cap-lateral{border-right:none;border-left:1px solid rgba(212,168,67,.1);order:2}
-.cap.inverso .cap-cuerpo{order:1;padding:80px 56px 80px 72px}
-.cap.inverso .cap-bg-num{right:auto;left:-20px}
-
-/* ============ CAPÍTULO ESPECIAL: full bleed ============ */
-.cap-full{
-  min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
-  background:rgba(212,168,67,.03);
-  border-top:1px solid rgba(212,168,67,.08);
-  border-bottom:1px solid rgba(212,168,67,.08);
-  opacity:0;transform:translateY(60px);
-  transition:opacity 1s ease,transform 1s ease;
-}
-.cap-full.vis{opacity:1;transform:translateY(0)}
-.cap-full-inner{
-  text-align:center;padding:80px 60px;
-  max-width:720px;
-}
-.cap-full-num{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(5rem,15vw,12rem);
-  font-weight:900;color:transparent;
-  -webkit-text-stroke:1px rgba(212,168,67,.15);
-  line-height:1;margin-bottom:-20px;
-  display:block;
-}
-.cap-full-titulo{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.8rem,5vw,3rem);
-  font-style:italic;font-weight:400;
-  color:var(--crema);
-  line-height:1.2;margin-bottom:52px;
-}
-.cap-full .cap-texto{max-width:100%;text-align:left}
-.cap-full .verso{max-width:100%}
-
-/* ============ CIERRE ============ */
-#cierre{
-  min-height:100vh;
-  background:var(--negro2);
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  position:relative;overflow:hidden;
-  opacity:0;transform:translateY(60px);
-  transition:opacity 1.2s ease,transform 1.2s ease;
-}
-#cierre.vis{opacity:1;transform:translateY(0)}
-.cierre-izq{
-  padding:100px 60px;
-  display:flex;flex-direction:column;
-  justify-content:center;
-  border-right:1px solid rgba(212,168,67,.1);
-}
-.cierre-epilogo{
-  font-family:'Montserrat',sans-serif;
-  font-size:.55rem;font-weight:200;
-  letter-spacing:.6em;color:var(--oro3);
-  text-transform:uppercase;margin-bottom:32px;
-}
-.cierre-titulo{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.8rem,4vw,2.8rem);
-  font-style:italic;font-weight:400;
-  color:var(--crema);line-height:1.2;
-  margin-bottom:40px;
-}
-.cierre-cuerpo{
-  font-size:clamp(1rem,2vw,1.12rem);
-  font-style:italic;
-  color:rgba(245,234,208,.65);
-  line-height:2.2;
-}
-.cierre-cuerpo p{margin-bottom:24px}
-
-.cierre-der{
-  padding:100px 60px;
-  display:flex;flex-direction:column;
-  justify-content:flex-end;align-items:flex-start;
-  position:relative;overflow:hidden;
-}
-.cierre-bg-texto{
-  position:absolute;top:0;left:0;right:0;bottom:0;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;
-  font-size:clamp(8rem,20vw,16rem);font-weight:900;
-  color:transparent;-webkit-text-stroke:1px rgba(212,168,67,.05);
-  user-select:none;line-height:1;
-  transform:rotate(-15deg);
-}
-.firma-titulo{
-  font-family:'Montserrat',sans-serif;
-  font-size:.55rem;font-weight:200;
-  letter-spacing:.5em;color:var(--oro3);
-  text-transform:uppercase;margin-bottom:20px;
-  z-index:1;
-}
-.firma{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1rem,2.2vw,1.3rem);
-  font-style:italic;font-weight:400;
-  color:rgba(245,234,208,.7);
-  line-height:2.4;z-index:1;
-}
-.firma strong{
-  display:block;margin-top:12px;
-  color:var(--oro);font-weight:400;
-  font-size:1.1em;
-}
-
-/* ANIMACIONES */
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes slideR{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
-
-/* GRAIN OVERLAY */
-#grain{
-  position:fixed;inset:0;z-index:5000;pointer-events:none;
-  opacity:.025;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat:repeat;background-size:128px;
-}
-
-/* RESPONSIVE */
-@media(max-width:768px){
-  #portada{grid-template-columns:1fr}
-  .portada-der{display:none}
-  .cap{grid-template-columns:60px 1fr}
-  .cap.inverso{grid-template-columns:1fr 60px}
-  .cap-cuerpo{padding:60px 28px 60px 24px}
-  .cap.inverso .cap-cuerpo{padding:60px 24px 60px 28px}
-  .cap-lateral-num{font-size:4rem}
-  #cierre{grid-template-columns:1fr}
-  .cierre-der{display:none}
-  .cierre-izq{padding:80px 32px}
-  #nav-lateral{display:none}
-}
-@media(max-width:480px){
-  .cap{grid-template-columns:1fr}
-  .cap-lateral{display:none}
-  .cap.inverso{grid-template-columns:1fr}
-  .cap.inverso .cap-cuerpo{order:1}
-  .cap-cuerpo{padding:60px 24px}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
 }
 </style>
 </head>
 <body>
-<div id="grain"></div>
-<div id="cur"></div>
-<div id="cur2"></div>
-<div id="prog"></div>
-<nav id="nav-lateral"></nav>
 
-<!-- ============ PORTADA ============ -->
-<section class="seccion" id="portada" data-sec="0">
-  <div class="portada-izq">
-    <div class="portada-num-grande">I</div>
-    <p class="portada-eyebrow">Poesía · Amor · Verdad</p>
-    <h1 class="portada-titulo">
-      Lo que el<br>silencio
-      <span>guarda de ti</span>
-    </h1>
-    <div class="portada-linea-deco"></div>
-    <p class="portada-dedicatoria">
-      Para ella, que entró a mi vida<br>
-      como entra la luz de enero:<br>
-      sin avisar, sin pedir permiso,<br>
-      y sin dejar que nada volviera<br>
-      a ser igual.
-    </p>
-  </div>
-  <div class="portada-der">
-    <p class="portada-año">MMXXVI · Una obra de amor</p>
-    <svg class="portada-ornamento" width="64" height="64" viewBox="0 0 64 64" fill="none">
-      <circle cx="32" cy="32" r="3" fill="#d4a843"/>
-      <line x1="32" y1="4" x2="32" y2="18" stroke="#d4a843" stroke-width="1"/>
-      <line x1="32" y1="46" x2="32" y2="60" stroke="#d4a843" stroke-width="1"/>
-      <line x1="4" y1="32" x2="18" y2="32" stroke="#d4a843" stroke-width="1"/>
-      <line x1="46" y1="32" x2="60" y2="32" stroke="#d4a843" stroke-width="1"/>
-      <line x1="12" y1="12" x2="22" y2="22" stroke="#d4a843" stroke-width=".8"/>
-      <line x1="42" y1="42" x2="52" y2="52" stroke="#d4a843" stroke-width=".8"/>
-      <line x1="52" y1="12" x2="42" y2="22" stroke="#d4a843" stroke-width=".8"/>
-      <line x1="22" y1="42" x2="12" y2="52" stroke="#d4a843" stroke-width=".8"/>
-      <circle cx="32" cy="32" r="14" stroke="rgba(212,168,67,.2)" stroke-width=".6"/>
-      <circle cx="32" cy="32" r="24" stroke="rgba(212,168,67,.1)" stroke-width=".6"/>
-    </svg>
-    <p class="portada-subtitulo-der">
-      Keats · Byron<br>Neruda · Dante<br>
-      <br>
-      ...y quien esto escribe.
-    </p>
+<div id="firefly"></div>
+<canvas id="stars"></canvas>
+
+<div id="vine-wrap"><svg id="vine" viewBox="0 0 2 1000" preserveAspectRatio="none">
+  <path id="vine-path" d="M1,0 C1,120 1,120 1,1000"/>
+</svg></div>
+
+<main>
+
+<section class="seccion" id="hero">
+  <p class="hero-eyebrow">un jardín que crece cada vez que pienso en ti</p>
+  <svg class="flor-hero" id="flor-hero-svg" viewBox="0 0 200 200" fill="none">
+    <g id="petalos-hero">
+      <ellipse cx="100" cy="60" rx="26" ry="42" fill="#d9a5a0" opacity=".9" transform="rotate(0 100 100)"/>
+      <ellipse cx="100" cy="60" rx="26" ry="42" fill="#d9a5a0" opacity=".9" transform="rotate(60 100 100)"/>
+      <ellipse cx="100" cy="60" rx="26" ry="42" fill="#d9a5a0" opacity=".9" transform="rotate(120 100 100)"/>
+      <ellipse cx="100" cy="60" rx="26" ry="42" fill="#c98d87" opacity=".85" transform="rotate(180 100 100)"/>
+      <ellipse cx="100" cy="60" rx="26" ry="42" fill="#c98d87" opacity=".85" transform="rotate(240 100 100)"/>
+      <ellipse cx="100" cy="60" rx="26" ry="42" fill="#c98d87" opacity=".85" transform="rotate(300 100 100)"/>
+    </g>
+    <circle cx="100" cy="100" r="16" fill="#f7d998"/>
+  </svg>
+  <h1>Lo que crece en silencio<br>cuando pienso en ti</h1>
+  <p class="hero-sub">No es una carta. Es un jardín. Cada flor que encuentres al bajar es algo que quería decirte y nunca encontré el momento.</p>
+  <p class="scroll-hint">baja despacio <span>↓</span></p>
+</section>
+
+<section class="seccion">
+  <div class="flor-block izq" data-flor="1">
+    <svg class="flor-svg" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="6" fill="#f7d998"/><ellipse cx="30" cy="14" rx="8" ry="14" fill="#7a9b76" transform="rotate(0 30 30)"/><ellipse cx="30" cy="14" rx="8" ry="14" fill="#7a9b76" transform="rotate(72 30 30)"/><ellipse cx="30" cy="14" rx="8" ry="14" fill="#7a9b76" transform="rotate(144 30 30)"/><ellipse cx="30" cy="14" rx="8" ry="14" fill="#7a9b76" transform="rotate(216 30 30)"/><ellipse cx="30" cy="14" rx="8" ry="14" fill="#7a9b76" transform="rotate(288 30 30)"/></svg>
+    <p class="marca">primera raíz</p>
+    <h2>No sabes que floreces</h2>
+    <p>Hay personas que entran a un cuarto sabiendo el efecto que causan. Tú no. Tú entras y el efecto ocurre de todas formas — sin que lo calcules, sin que lo pidas. Esa es la diferencia entre la belleza que se administra y la que simplemente es.</p>
+    <p class="verso">No eres flor que espera ser mirada.<br>Eres flor que crece aunque nadie mire.</p>
   </div>
 </section>
 
-<!-- ============ PRÓLOGO ============ -->
-<section class="cap" id="s1" data-sec="1">
-  <div class="cap-lateral">
-    <span class="cap-lateral-linea"></span>
-    <span class="cap-lateral-num">P</span>
-    <span class="cap-lateral-tag">Prólogo</span>
-  </div>
-  <div class="cap-cuerpo">
-    <div class="cap-bg-num">P</div>
-    <h2 class="cap-titulo-grande">Antes de que el corazón encuentre las palabras</h2>
-    <div class="cap-texto">
-      <p>Los poetas antiguos decían que el amor verdadero no se anuncia — simplemente ocurre, como ocurre la lluvia sobre el mar: sin que el mar lo pida y sin que la lluvia pueda evitarlo. Yo los entendí el día que te vi.</p>
-      <p>Este libro no es una declaración. Es algo más íntimo que eso: es el registro fiel de lo que pasa adentro cuando alguien como tú existe en el mismo mundo que yo. No busca convencerte de nada. Solo quiere que sepas que fuiste vista — entera, con todo lo que eres — y que lo que se vio era demasiado extraordinario para guardarlo en silencio.</p>
-      <div class="verso">
-        <span class="verso-linea-ani"></span>
-        <p class="verso-texto">Léelo despacio.<br>Tú también eres un verso que merece ser leído con calma.</p>
-      </div>
-    </div>
+<section class="seccion">
+  <div class="flor-block der" data-flor="2">
+    <svg class="flor-svg" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="6" fill="#f7d998"/><ellipse cx="30" cy="14" rx="9" ry="15" fill="#d9a5a0" transform="rotate(0 30 30)"/><ellipse cx="30" cy="14" rx="9" ry="15" fill="#c98d87" transform="rotate(90 30 30)"/><ellipse cx="30" cy="14" rx="9" ry="15" fill="#d9a5a0" transform="rotate(180 30 30)"/><ellipse cx="30" cy="14" rx="9" ry="15" fill="#c98d87" transform="rotate(270 30 30)"/></svg>
+    <p class="marca">segunda raíz</p>
+    <h2>Tu voz cambia el clima</h2>
+    <p>Hay una temperatura distinta en los lugares donde hablas. No sé explicarlo mejor que así: el aire decide quedarse un poco más cuando tú estás diciendo algo. Nadie te enseñó eso. Se trae puesto.</p>
+    <p class="verso">Cuando hablas, el silencio se hace a un lado<br>por respeto.</p>
   </div>
 </section>
 
-<div class="sep-drama" data-sec="1.5">
-  <div class="sep-drama-bg">I</div>
-  <div class="sep-drama-inner">
-    <span class="sep-linea-l"></span>
-    <span class="sep-drama-txt">Capítulo I</span>
-    <span class="sep-linea-r"></span>
-  </div>
-</div>
-
-<!-- ============ CAP I ============ -->
-<section class="cap" id="s2" data-sec="2">
-  <div class="cap-lateral">
-    <span class="cap-lateral-linea"></span>
-    <span class="cap-lateral-num">I</span>
-    <span class="cap-lateral-tag">Belleza</span>
-  </div>
-  <div class="cap-cuerpo">
-    <div class="cap-bg-num">I</div>
-    <h2 class="cap-titulo-grande">De cómo la belleza<br>a veces no sabe que lo es</h2>
-    <div class="cap-texto">
-      <p>Hay una clase de belleza que sabe que existe y la administra con cuidado, que entra a un cuarto calculando el efecto. Y hay otra clase — la tuya — que no lleva cuentas, que no negocia ni posa, que simplemente irradia porque no puede hacer otra cosa.</p>
-      <p>Tus ojos llevan adentro algo que los pintores del Renacimiento habrían perseguido durante años sin encontrar del todo: esa mezcla exacta de ternura y profundidad que solo tienen las personas que han vivido de verdad, que han amado de verdad, que han dolido de verdad.</p>
-      <div class="verso">
-        <span class="verso-linea-ani"></span>
-        <p class="verso-texto">No eres hermosa como lo son las flores,<br>que esperan quietas a ser admiradas.<br>Eres hermosa como lo es el viento:<br>en movimiento, sin saberlo, sin remedio.</p>
-      </div>
-      <p>Y luego está tu forma de moverte por el mundo — con esa ligereza que no es indiferencia sino elegancia natural, la de quien encontró su propio ritmo y ya no necesita seguir el de nadie más.</p>
-    </div>
+<section class="seccion">
+  <div class="flor-block izq" data-flor="3">
+    <svg class="flor-svg" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="6" fill="#f7d998"/><ellipse cx="30" cy="16" rx="7" ry="16" fill="#7a9b76" transform="rotate(0 30 30)"/><ellipse cx="30" cy="16" rx="7" ry="16" fill="#5c7a58" transform="rotate(51 30 30)"/><ellipse cx="30" cy="16" rx="7" ry="16" fill="#7a9b76" transform="rotate(102 30 30)"/><ellipse cx="30" cy="16" rx="7" ry="16" fill="#5c7a58" transform="rotate(153 30 30)"/><ellipse cx="30" cy="16" rx="7" ry="16" fill="#7a9b76" transform="rotate(204 30 30)"/><ellipse cx="30" cy="16" rx="7" ry="16" fill="#5c7a58" transform="rotate(255 30 30)"/><ellipse cx="30" cy="16" rx="7" ry="16" fill="#7a9b76" transform="rotate(306 30 30)"/></svg>
+    <p class="marca">tercera raíz</p>
+    <h2>Las montañas que no gritan</h2>
+    <p>Te he visto elegir lo difícil cuando lo fácil estaba justo ahí, disponible. No por terquedad — por una claridad interna que sabe que las cosas que valen no vienen por el camino corto. Eso no se finge.</p>
+    <p class="verso">Hay montañas que anuncian su altura.<br>Tú simplemente eres alta,<br>y por eso las nubes te buscan.</p>
   </div>
 </section>
 
-<div class="sep-drama" data-sec="2.5">
-  <div class="sep-drama-bg">II</div>
-  <div class="sep-drama-inner">
-    <span class="sep-linea-l"></span>
-    <span class="sep-drama-txt">Capítulo II</span>
-    <span class="sep-linea-r"></span>
-  </div>
-</div>
-
-<!-- ============ CAP II — FULL BLEED ============ -->
-<section class="cap-full" id="s3" data-sec="3">
-  <div class="cap-full-inner">
-    <span class="cap-full-num">II</span>
-    <h2 class="cap-full-titulo">El idioma secreto de tu presencia</h2>
-    <div class="cap-texto">
-      <p>Neruda decía que quería hacer contigo lo que la primavera hace con los cerezos. Yo lo entendí mal durante años — pensé que era sobre florecer. Ahora sé que es sobre algo más sencillo y más brutal: la primavera no le pide permiso al cerezo. Llega, y el cerezo florece porque no puede evitarlo.</p>
-      <p>Así llegas tú. Sin aviso. Y todo lo que hay cerca de ti florece sin poder evitarlo.</p>
-      <div class="verso">
-        <span class="verso-linea-ani"></span>
-        <p class="verso-texto">Cuando hablas,<br>el aire cambia de opinión<br>y decide quedarse un poco más.</p>
-      </div>
-      <p>Hay algo en tu voz que reorganiza el mundo. No es solo el sonido — es la intención que hay detrás, esa calidez que hace que quien te escucha sienta que lo que dice le importa a alguien de verdad. Eso no se aprende. Eso se trae puesto desde antes.</p>
-    </div>
+<section class="seccion">
+  <div class="flor-block der" data-flor="4">
+    <svg class="flor-svg" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="6" fill="#f7d998"/><ellipse cx="30" cy="14" rx="10" ry="16" fill="#c98d87" transform="rotate(0 30 30)"/><ellipse cx="30" cy="14" rx="10" ry="16" fill="#d9a5a0" transform="rotate(72 30 30)"/><ellipse cx="30" cy="14" rx="10" ry="16" fill="#c98d87" transform="rotate(144 30 30)"/><ellipse cx="30" cy="14" rx="10" ry="16" fill="#d9a5a0" transform="rotate(216 30 30)"/><ellipse cx="30" cy="14" rx="10" ry="16" fill="#c98d87" transform="rotate(288 30 30)"/></svg>
+    <p class="marca">cuarta raíz</p>
+    <h2>Mereces que te elijan, no que te aguanten</h2>
+    <p>No el amor que resiste por costumbre. El otro: el que escucha antes de responder, el que encuentra en lo imperfecto una razón más para quedarse, no para irse. Eso existe. Y si no lo tienes todavía, mientras tanto — te lo digo yo.</p>
+    <p class="verso">No busques a alguien que te aguante.<br>Busca a alguien que te elija<br>incluso los días en que cuesta.</p>
   </div>
 </section>
 
-<div class="sep-drama" data-sec="3.5">
-  <div class="sep-drama-bg">III</div>
-  <div class="sep-drama-inner">
-    <span class="sep-linea-l"></span>
-    <span class="sep-drama-txt">Capítulo III</span>
-    <span class="sep-linea-r"></span>
-  </div>
-</div>
-
-<!-- ============ CAP III — INVERTIDO ============ -->
-<section class="cap inverso" id="s4" data-sec="4">
-  <div class="cap-lateral">
-    <span class="cap-lateral-linea"></span>
-    <span class="cap-lateral-num">III</span>
-    <span class="cap-lateral-tag">Keats</span>
-  </div>
-  <div class="cap-cuerpo">
-    <div class="cap-bg-num">III</div>
-    <h2 class="cap-titulo-grande">Lo que Keats habría<br>escrito si te hubiera conocido</h2>
-    <div class="cap-texto">
-      <p>Keats murió a los veinticinco años convencido de que la belleza era la única forma de verdad. Pasó su vida entera buscando en mármoles griegos y noches de ruiseñor algo que, de haberte conocido, habría encontrado en la curva de tu sonrisa.</p>
-      <p>Porque así es tu sonrisa — no el gesto calculado que uno muestra cuando quiere parecer amable, sino ese otro, el que llega antes de que puedas contenerlo, el que te delata cuando algo de verdad te alegra. Ese es el que detiene el tiempo.</p>
-      <div class="verso">
-        <span class="verso-linea-ani"></span>
-        <p class="verso-texto">Tu sonrisa es de esas cosas<br>que hacen que uno entienda, por primera vez,<br>por qué los poetas se quedaron sin dormir.</p>
-      </div>
-      <p>Y tu risa — cuando es la de verdad, la que no tiene dueño — suena como debería sonar todo: honesta, libre, sin miedo a ocupar el espacio que le corresponde.</p>
-    </div>
-  </div>
+<section class="seccion" id="cierre">
+  <svg class="luna-svg" viewBox="0 0 100 100" fill="none">
+    <path d="M62 10a40 40 0 1 0 28 66A32 32 0 0 1 62 10z" fill="#f2ead9" opacity=".92"/>
+  </svg>
+  <p class="marca">y aún crece</p>
+  <h2>Este jardín no termina aquí</h2>
+  <p>Sigue creciendo cada vez que pienso en ti — solo que las próximas flores todavía no las escribo. Guarda este lugar. Vuelve cuando quieras que te recuerden lo que eres.</p>
+  <p class="firma">con la raíz puesta,<br>quien te ve crecer.</p>
 </section>
 
-<div class="sep-drama" data-sec="4.5">
-  <div class="sep-drama-bg">IV</div>
-  <div class="sep-drama-inner">
-    <span class="sep-linea-l"></span>
-    <span class="sep-drama-txt">Capítulo IV</span>
-    <span class="sep-linea-r"></span>
-  </div>
-</div>
-
-<!-- ============ CAP IV ============ -->
-<section class="cap" id="s5" data-sec="5">
-  <div class="cap-lateral">
-    <span class="cap-lateral-linea"></span>
-    <span class="cap-lateral-num">IV</span>
-    <span class="cap-lateral-tag">Fuerza</span>
-  </div>
-  <div class="cap-cuerpo">
-    <div class="cap-bg-num">IV</div>
-    <h2 class="cap-titulo-grande">La mujer que construye<br>mientras el mundo duerme</h2>
-    <div class="cap-texto">
-      <p>Pero toda esta belleza sería solo la superficie de algo mucho más interesante si no fuera por lo que hay debajo: esa arquitectura interna tuya, esa forma de enfrentar las cosas con una determinación que no hace ruido pero que no cede.</p>
-      <p>Te he visto empujar cuando sería más cómodo detenerse. Elegir el camino difícil no porque no conozcas el fácil, sino porque algo en ti sabe que las cosas que valen la pena no vienen por el camino fácil. Eso es sabiduría. Eso es carácter. Eso son las cosas que los siglos recuerdan.</p>
-      <div class="verso">
-        <span class="verso-linea-ani"></span>
-        <p class="verso-texto">Hay montañas que gritan su altura.<br>Y hay montañas que simplemente son altas.<br>Tú eres de las segundas,<br>y por eso las nubes te buscan.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="sep-drama" data-sec="5.5">
-  <div class="sep-drama-bg">V</div>
-  <div class="sep-drama-inner">
-    <span class="sep-linea-l"></span>
-    <span class="sep-drama-txt">Capítulo V</span>
-    <span class="sep-linea-r"></span>
-  </div>
-</div>
-
-<!-- ============ CAP V — FULL BLEED ============ -->
-<section class="cap-full" id="s6" data-sec="6">
-  <div class="cap-full-inner">
-    <span class="cap-full-num">V</span>
-    <h2 class="cap-full-titulo">Confesión de quien ya no puede guardar silencio</h2>
-    <div class="cap-texto">
-      <p>Lord Byron decía que caminar por la belleza era como caminar por la noche serena, llena de cielos estrellados. Era su manera de decir que hay personas que llevan su propio clima, que traen consigo una atmósfera que lo cambia todo.</p>
-      <p>Tú eres eso. Desde que entraste a este mundo mío, las cosas tienen otros colores. Los lunes pesan menos. Los momentos ordinarios tienen más textura. Como si tu existencia le hubiera recordado al mundo que todavía puede ser hermoso si se lo propone.</p>
-      <div class="verso">
-        <span class="verso-linea-ani"></span>
-        <p class="verso-texto">No sé qué eres tú exactamente,<br>pero sé que antes de ti<br>había cosas que no podía ver<br>y ahora no puedo dejar de ver.</p>
-      </div>
-      <p>Y lo más asombroso es que tú no lo haces a propósito. Es simplemente lo que ocurre cuando alguien es, sin más, completamente auténtico. Y esa autenticidad tuya es la cosa más irresistible que he encontrado en este mundo.</p>
-    </div>
-  </div>
-</section>
-
-<div class="sep-drama" data-sec="6.5">
-  <div class="sep-drama-bg">VI</div>
-  <div class="sep-drama-inner">
-    <span class="sep-linea-l"></span>
-    <span class="sep-drama-txt">Capítulo VI</span>
-    <span class="sep-linea-r"></span>
-  </div>
-</div>
-
-<!-- ============ CAP VI — INVERTIDO ============ -->
-<section class="cap inverso" id="s7" data-sec="7">
-  <div class="cap-lateral">
-    <span class="cap-lateral-linea"></span>
-    <span class="cap-lateral-num">VI</span>
-    <span class="cap-lateral-tag">Amor</span>
-  </div>
-  <div class="cap-cuerpo">
-    <div class="cap-bg-num">VI</div>
-    <h2 class="cap-titulo-grande">Todo lo que mereces<br>y el amor verdadero sabe dar</h2>
-    <div class="cap-texto">
-      <p>Mereces el tipo de amor que los románticos del siglo XIX describían pero raramente practicaban: el que escucha más de lo que habla, el que celebra sin condiciones, el que encuentra en los defectos no razones para alejarse sino razones adicionales para quedarse.</p>
-      <p>Mereces que alguien te mire como Dante miraba a Beatriz — no con la ceguera idealizada del que no ve, sino con la claridad iluminada del que ve todo y elige quedarse de todas formas.</p>
-      <div class="verso">
-        <span class="verso-linea-ani"></span>
-        <p class="verso-texto">No te mereces a alguien que te aguante.<br>Te mereces a alguien que te elija<br>todos los días,<br>incluso los días en que elegirte cuesta.</p>
-      </div>
-      <p>Y mientras ese amor llega — o mientras ya está aquí y solo espera ser nombrado — quiero que tengas esto: la certeza de que fuiste vista, que lo que se vio fue extraordinario, y que hay alguien en este mundo para quien tu existencia es uno de los regalos más inesperados y más agradecidos de su vida.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CIERRE ============ -->
-<section id="cierre" data-sec="8">
-  <div class="cierre-izq">
-    <p class="cierre-epilogo">Epílogo · Fin</p>
-    <h2 class="cierre-titulo">Una promesa<br>sin última página</h2>
-    <div class="cierre-cuerpo">
-      <p>Los poetas antiguos firmaban sus versos con la certeza de que el tiempo los borraría a ellos pero no a las palabras. Escribían para la eternidad porque sabían que la belleza verdadera no tiene fecha de vencimiento.</p>
-      <p>Por eso este libro tampoco la tiene. Guárdalo. Y cuando el mundo se ponga gris y necesites que alguien te recuerde lo que eres, vuelve aquí. Estas páginas fueron escritas precisamente para ese momento.</p>
-    </div>
-  </div>
-  <div class="cierre-der">
-    <div class="cierre-bg-texto">∞</div>
-    <p class="firma-titulo">De parte de</p>
-    <p class="firma">
-      Con la certeza de Keats,<br>
-      la intensidad de Byron,<br>
-      la ternura de Neruda<br>
-      y la claridad de Dante,<br>
-      <strong>tuyo —<br>el que te vio y ya no pudo desver.</strong>
-    </p>
-  </div>
-</section>
+</main>
 
 <script>
-// ===== CURSOR =====
-const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
-let mx=window.innerWidth/2,my=window.innerHeight/2,rx=mx,ry=my;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=mx+'px';cur.style.top=my+'px';
-});
-function animCursor(){
-  rx+=(mx-rx)*.13;ry+=(my-ry)*.13;
-  cur2.style.left=rx+'px';cur2.style.top=ry+'px';
-  requestAnimationFrame(animCursor);
+// stars canvas
+const cvs=document.getElementById('stars'),ctx=cvs.getContext('2d');
+function resize(){cvs.width=innerWidth;cvs.height=document.body.scrollHeight}
+resize();window.addEventListener('resize',resize);
+const stars=Array.from({length:120},()=>({x:Math.random()*cvs.width,y:Math.random()*cvs.height,r:Math.random()*1.3+.2,a:Math.random()}));
+function drawStars(){
+  ctx.clearRect(0,0,cvs.width,cvs.height);
+  stars.forEach(s=>{
+    ctx.globalAlpha=.3+.5*Math.abs(Math.sin(Date.now()/1800+s.x));
+    ctx.fillStyle='#f2ead9';
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,7);ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
 }
-animCursor();
-document.querySelectorAll('h1,h2,.verso-texto').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{
-    cur.style.transform='translate(-50%,-50%) scale(3)';
-    cur2.style.transform='translate(-50%,-50%) scale(1.6)';
-    cur2.style.borderColor='rgba(212,168,67,.9)';
-  });
-  el.addEventListener('mouseleave',()=>{
-    cur.style.transform='translate(-50%,-50%) scale(1)';
-    cur2.style.transform='translate(-50%,-50%) scale(1)';
-    cur2.style.borderColor='rgba(212,168,67,.4)';
-  });
+drawStars();
+
+// firefly follows cursor (desktop only)
+const fly=document.getElementById('firefly');
+window.addEventListener('mousemove',e=>{
+  fly.style.left=e.clientX+'px';fly.style.top=e.clientY+'px';
 });
 
-// ===== PROGRESS BAR =====
-const prog=document.getElementById('prog');
-window.addEventListener('scroll',()=>{
-  const p=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
-  prog.style.width=p+'%';
-});
+// vine grows with scroll
+const vinePath=document.getElementById('vine-path');
+const vineLen=vinePath.getTotalLength();
+vinePath.style.strokeDasharray=vineLen;
+vinePath.style.strokeDashoffset=vineLen;
+function updateVine(){
+  const docH=document.body.scrollHeight-innerHeight;
+  const p=Math.min(scrollY/docH,1);
+  vinePath.style.strokeDashoffset=vineLen*(1-p);
+}
+window.addEventListener('scroll',updateVine);updateVine();
 
-// ===== NAV DOTS =====
-const secciones=['portada','s1','s2','s3','s4','s5','s6','s7','cierre'];
-const navEl=document.getElementById('nav-lateral');
-secciones.forEach((id,i)=>{
-  const d=document.createElement('div');
-  d.className='nav-dot';
-  d.title='Sección '+(i+1);
-  d.onclick=()=>document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
-  navEl.appendChild(d);
-});
-const dots=navEl.querySelectorAll('.nav-dot');
-
-// ===== SCROLL REVEAL =====
+// reveal flowers + hero bloom
 const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('vis');
-      // actualizar nav dot
-      const id=e.target.id;
-      const idx=secciones.indexOf(id);
-      if(idx>=0){
-        dots.forEach(d=>d.classList.remove('active'));
-        dots[idx]?.classList.add('active');
-      }
-    }
-  });
-},{threshold:.15});
+  entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('vis'); });
+},{threshold:.3});
+document.querySelectorAll('.flor-block').forEach(el=>obs.observe(el));
 
-document.querySelectorAll('.cap,.cap-full,.sep-drama,#cierre,#portada').forEach(el=>obs.observe(el));
-
-// ===== LOADER =====
-window.addEventListener('load',()=>{
-  setTimeout(()=>{
-    document.getElementById('loader')?.classList.add('gone');
-  },2000);
-});
-
-// ===== PARALLAX SUTIL EN NÚMEROS DE FONDO =====
-window.addEventListener('scroll',()=>{
-  const sy=window.scrollY;
-  document.querySelectorAll('.cap-bg-num').forEach((el,i)=>{
-    const offset=(sy*0.04*(i%2===0?1:-1));
-    el.style.transform=`translateY(calc(-50% + ${offset}px))`;
-  });
+requestAnimationFrame(()=>{
+  const h=document.getElementById('flor-hero-svg');
+  h.style.transition='opacity 1.4s ease, transform 1.4s cubic-bezier(.34,1.2,.64,1)';
+  h.style.transform='scale(1)';
+  setTimeout(()=>{h.style.opacity=1;},200);
 });
 </script>
 </body>
