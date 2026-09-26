@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>para ti</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Lora:ital@1&display=swap" rel="stylesheet">
+<style>
+  body{
+    margin:0; height:100dvh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:34px;
+    background:#f2e6d1; color:#2c2418; font-family:'Lora',serif;
+    text-align:center; padding:24px; overflow:hidden;
+  }
+  .saludo{ font-family:'Caveat',cursive; font-size:2.1rem; max-width:16ch; line-height:1.2; opacity:0; animation:aparece 1.4s ease forwards .3s; }
+  .sub{ font-style:italic; color:rgba(44,36,24,.55); opacity:0; animation:aparece 1.4s ease forwards 1.1s; }
+  @keyframes aparece{ to{opacity:1} }
+
+  .mancha{
+    width:26px; height:26px; border-radius:50%;
+    background:#a13d2c; cursor:pointer; border:none;
+    animation:respira 2.6s ease-in-out infinite;
+    transition:transform .6s ease, width .6s ease, height .6s ease;
+  }
+  @keyframes respira{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.18)} }
+  .mancha.click{ width:280vmax; height:280vmax; animation:none; border-radius:50%; }
+</style>
+</head>
+<body>
+  <p class="saludo">hola. no sabía que ibas a entrar justo hoy.</p>
+  <p class="sub">hay algo aquí para ti. tócalo.</p>
+  <button class="mancha" id="tinta" aria-label="entrar"></button>
+
+<script>
+  const btn = document.getElementById('tinta');
+  btn.addEventListener('click', () => {
+    btn.classList.add('click');
+    setTimeout(() => { window.location.href = 'cuaderno.html'; }, 650);
+  });
+</script>
+</body>
+</html>
