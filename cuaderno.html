@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cuaderno de intentos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --papel:#f2e6d1; --papel2:#ece0c9;
+  --tinta:#2c2418; --tinta-dim:rgba(44,36,24,.62);
+  --tacha:#a13d2c; --terracota:#c1613f; --terracota-dim:rgba(193,97,63,.5);
+  --linea:rgba(44,36,24,.10);
+}
+:root:not([data-theme="light"]) { }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --papel:#20180f; --papel2:#241b11;
+    --tinta:#ecdcc0; --tinta-dim:rgba(236,220,192,.62);
+    --linea:rgba(236,220,192,.08);
+  }
+}
+:root[data-theme="dark"]{
+  --papel:#20180f; --papel2:#241b11;
+  --tinta:#ecdcc0; --tinta-dim:rgba(236,220,192,.62);
+  --linea:rgba(236,220,192,.08);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--papel);
+  color:var(--tinta);
+  font-family:'Lora',serif;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  overflow-x:hidden;
+}
+.pagina{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:70px 22px;position:relative;
+  background-image:repeating-linear-gradient(var(--papel) 0 38px, var(--linea) 38px 39px);
+}
+.pagina + .pagina{border-top:1px dashed var(--linea)}
+
+/* cover */
+#portada{background-image:none}
+#portada .num{font-family:'Inter';font-size:.72rem;letter-spacing:.18em;color:var(--terracota);text-transform:uppercase;margin-bottom:18px}
+#portada h1{font-family:'Caveat';font-weight:700;font-size:clamp(2.6rem,9vw,4.4rem);line-height:1.05;text-align:center;max-width:14ch;transform:rotate(-1.2deg)}
+#portada p{margin-top:22px;max-width:34ch;text-align:center;color:var(--tinta-dim);font-style:italic;line-height:1.8}
+.scroll-hint{margin-top:34px;font-family:'Inter';font-size:.7rem;letter-spacing:.14em;color:var(--terracota-dim)}
+
+/* entry structure */
+.entrada{max-width:520px;width:100%;position:relative}
+.folio{font-family:'Inter';font-size:.68rem;letter-spacing:.12em;color:var(--terracota-dim);margin-bottom:14px;text-transform:lowercase}
+.tachado-wrap{margin-bottom:22px}
+.linea-tach{
+  font-family:'Caveat';font-weight:500;font-size:1.35rem;line-height:1.5;
+  color:var(--tinta-dim); position:relative; display:inline;
+  transform:rotate(-0.4deg);
+}
+.linea-tach::after{
+  content:'';position:absolute;left:0;top:50%;height:2px;background:var(--tacha);
+  width:0%; transition:width 1.1s cubic-bezier(.4,0,.2,1);
+}
+.entrada.vis .linea-tach::after{width:100%}
+.final{
+  font-family:'Lora';font-style:italic;font-weight:400;
+  font-size:clamp(1.15rem,3vw,1.42rem);line-height:1.85;
+  opacity:0;transform:translateY(10px);
+  transition:opacity 1s ease .9s, transform 1s ease .9s;
+}
+.entrada.vis .final{opacity:1;transform:translateY(0)}
+.margen{
+  font-family:'Caveat';font-weight:600;font-size:1.05rem;color:var(--terracota);
+  margin-top:16px;opacity:0;transition:opacity 1s ease 1.6s;transform:rotate(-1deg);
+}
+.entrada.vis .margen{opacity:.85}
+
+/* closing */
+#cierre{text-align:center}
+#cierre .final{text-align:center;max-width:38ch}
+.firma{font-family:'Caveat';font-weight:700;font-size:1.6rem;color:var(--terracota);margin-top:26px;transform:rotate(-1deg)}
+
+@media(max-width:600px){
+  .linea-tach{font-size:1.2rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<section class="pagina" id="portada">
+  <p class="num">cuaderno · intentos 1–5</p>
+  <h1>No encontré la versión perfecta de decírtelo.<br>Aquí están los intentos.</h1>
+  <p>Nada de esto salió bien a la primera. Lo dejé así, tachado, porque prefiero que veas el intento real y no una copia en limpio.</p>
+  <p class="scroll-hint">sigue bajando ↓</p>
+</section>
+
+<section class="pagina">
+  <div class="entrada" data-e="1">
+    <p class="folio">intento nº1 — tachado dos veces</p>
+    <div class="tachado-wrap"><span class="linea-tach">Tú me diste fuerza para cumplir mis metas.</span></div>
+    <p class="final">Antes dejaba las cosas a la mitad — planes, ideas, cuadernos enteros sin terminar. Contigo, sin proponérmelo, empecé a terminarlas. Pequeñas, al principio. Ahora reviso la lista y ya no caben en la palabra "pequeñas".</p>
+    <p class="margen">(esto tampoco quedó bien, pero ya no lo voy a tachar.)</p>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="entrada" data-e="2">
+    <p class="folio">intento nº2 — tachado una vez</p>
+    <div class="tachado-wrap"><span class="linea-tach">Los sábados contigo eran lo mejor de mi semana.</span></div>
+    <p class="final">No tengo una hora favorita del día. Tengo una tarde de sábado — la de hablar de todo lo que aún no existe, y resolver, sin apuro, lo que sí. Se me enfriaba el café siempre. Nunca me importó.</p>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="entrada" data-e="3">
+    <p class="folio">intento nº3 — casi lo tacho, pero no</p>
+    <div class="tachado-wrap"><span class="linea-tach">Me devolviste las ganas de vivir con solo hablarme.</span></div>
+    <p class="final">No dijiste mucho. No hacía falta. Hay frases cortas que pesan más que un discurso entero — y las tuyas, sin buscarlo, me recordaron a qué sabía la vida antes de que se me hubiera olvidado.</p>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="entrada" data-e="4">
+    <p class="folio">intento nº4 — reescrito tres veces</p>
+    <div class="tachado-wrap"><span class="linea-tach">Eres una mujer muy fuerte y muy perseverante.</span></div>
+    <p class="final">Hay quienes sueltan rápido cuando algo se pone difícil. Tú no. Te he visto insistir en cosas que otros habrían dejado ir hace tiempo — un plan, una meta, una persona — con la misma terquedad silenciosa con la que el agua insiste en llegar, aunque tarde, aunque rodee.</p>
+    <p class="margen">(no encontré cómo decir esto sin que sonara a cumplido. sigue sonando a cumplido. igual me quedo con él.)</p>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="entrada" data-e="5">
+    <p class="folio">intento nº5 — el que más me costó</p>
+    <div class="tachado-wrap"><span class="linea-tach">Eres muy madura para tu edad y eso me encanta.</span></div>
+    <p class="final">Podrías tener razón y quedarte con ella. Prefieres soltarla si eso significa seguir. Eso no es debilidad — he visto de cerca lo que cuesta perdonar, y no lo confundo con ceder.</p>
+  </div>
+</section>
+
+<section class="pagina" id="cierre">
+  <div class="entrada vis" data-e="6">
+    <p class="folio">última página — sin tachar</p>
+    <p class="final">Esto no es un poema terminado. Es un cuaderno con tachones, porque nunca encontré la manera perfecta de decir esto y dejé de esperarla. Aquí está tal como es: intentado, corregido, vuelto a intentar.</p>
+    <p class="firma">como tú, cuando algo te importa de verdad.</p>
+  </div>
+</section>
+
+<script>
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('vis'); });
+},{threshold:.45});
+document.querySelectorAll('.entrada').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
