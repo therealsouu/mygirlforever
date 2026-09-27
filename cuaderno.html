@@ -2,157 +2,371 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cuaderno de intentos</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cuaderno de intentos</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --papel:#f2e6d1; --papel2:#ece0c9;
-  --tinta:#2c2418; --tinta-dim:rgba(44,36,24,.62);
-  --tacha:#a13d2c; --terracota:#c1613f; --terracota-dim:rgba(193,97,63,.5);
-  --linea:rgba(44,36,24,.10);
-}
-:root:not([data-theme="light"]) { }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --papel:#20180f; --papel2:#241b11;
-    --tinta:#ecdcc0; --tinta-dim:rgba(236,220,192,.62);
-    --linea:rgba(236,220,192,.08);
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Shantell+Sans:ital,wght,INFM,BNCE@0,300..800,0..100,-100..100;1,300..800,0..100,-100..100&display=swap');
+
+  :root {
+    --papel: #F7F4EA;
+    --tinta: #2A323D;
+    --grafito: #5C626D;
+    --lacre: #A83B2A;
+    --reja: #E2DAC6;
   }
-}
-:root[data-theme="dark"]{
-  --papel:#20180f; --papel2:#241b11;
-  --tinta:#ecdcc0; --tinta-dim:rgba(236,220,192,.62);
-  --linea:rgba(236,220,192,.08);
-}
-html{scroll-behavior:smooth}
-body{
-  background:var(--papel);
-  color:var(--tinta);
-  font-family:'Lora',serif;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-  overflow-x:hidden;
-}
-.pagina{
-  min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:70px 22px;position:relative;
-  background-image:repeating-linear-gradient(var(--papel) 0 38px, var(--linea) 38px 39px);
-}
-.pagina + .pagina{border-top:1px dashed var(--linea)}
 
-/* cover */
-#portada{background-image:none}
-#portada .num{font-family:'Inter';font-size:.72rem;letter-spacing:.18em;color:var(--terracota);text-transform:uppercase;margin-bottom:18px}
-#portada h1{font-family:'Caveat';font-weight:700;font-size:clamp(2.6rem,9vw,4.4rem);line-height:1.05;text-align:center;max-width:14ch;transform:rotate(-1.2deg)}
-#portada p{margin-top:22px;max-width:34ch;text-align:center;color:var(--tinta-dim);font-style:italic;line-height:1.8}
-.scroll-hint{margin-top:34px;font-family:'Inter';font-size:.7rem;letter-spacing:.14em;color:var(--terracota-dim)}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-/* entry structure */
-.entrada{max-width:520px;width:100%;position:relative}
-.folio{font-family:'Inter';font-size:.68rem;letter-spacing:.12em;color:var(--terracota-dim);margin-bottom:14px;text-transform:lowercase}
-.tachado-wrap{margin-bottom:22px}
-.linea-tach{
-  font-family:'Caveat';font-weight:500;font-size:1.35rem;line-height:1.5;
-  color:var(--tinta-dim); position:relative; display:inline;
-  transform:rotate(-0.4deg);
-}
-.linea-tach::after{
-  content:'';position:absolute;left:0;top:50%;height:2px;background:var(--tacha);
-  width:0%; transition:width 1.1s cubic-bezier(.4,0,.2,1);
-}
-.entrada.vis .linea-tach::after{width:100%}
-.final{
-  font-family:'Lora';font-style:italic;font-weight:400;
-  font-size:clamp(1.15rem,3vw,1.42rem);line-height:1.85;
-  opacity:0;transform:translateY(10px);
-  transition:opacity 1s ease .9s, transform 1s ease .9s;
-}
-.entrada.vis .final{opacity:1;transform:translateY(0)}
-.margen{
-  font-family:'Caveat';font-weight:600;font-size:1.05rem;color:var(--terracota);
-  margin-top:16px;opacity:0;transition:opacity 1s ease 1.6s;transform:rotate(-1deg);
-}
-.entrada.vis .margen{opacity:.85}
+  html {
+    scroll-behavior: smooth;
+  }
 
-/* closing */
-#cierre{text-align:center}
-#cierre .final{text-align:center;max-width:38ch}
-.firma{font-family:'Caveat';font-weight:700;font-size:1.6rem;color:var(--terracota);margin-top:26px;transform:rotate(-1deg)}
+  body {
+    font-family: 'Shantell Sans', 'Segoe UI', sans-serif;
+    font-variation-settings: "BNCE" 20, "INFM" 30;
+    color: var(--tinta);
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
 
-@media(max-width:600px){
-  .linea-tach{font-size:1.2rem}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  /* ============ textura de papel (CSS exacto del sistema de diseño) ============ */
+  .journal-surface {
+    background-color: #F7F4EA;
+    background-image:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.6), rgba(235,227,210,0.4)),
+      radial-gradient(#E2DAC6 1px, transparent 1px),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoise)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 100% 100%, 20px 20px, 200px 200px;
+  }
+
+  /* ============ cursor tinta (solo desktop) ============ */
+  .tinta-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    will-change: transform;
+  }
+
+  .tinta-cursor.visible {
+    opacity: 0.75;
+  }
+
+  .tinta-cursor svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-18deg);
+  }
+
+  @media (pointer: coarse) {
+    .tinta-cursor { display: none; }
+  }
+
+  /* ============ estructura del cuaderno ============ */
+  .cuaderno {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 18vh 1.6rem 20vh;
+    position: relative;
+  }
+
+  /* margen rojo de libreta, muy sutil */
+  .cuaderno::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: max(1rem, calc(50% - 320px - 2.2rem));
+    width: 1px;
+    background: rgba(168, 59, 42, 0.18);
+    pointer-events: none;
+  }
+
+  @media (max-width: 700px) {
+    .cuaderno::before { display: none; }
+  }
+
+  /* ============ sección introductoria ============ */
+  .intro {
+    margin-bottom: 22vh;
+  }
+
+  .intro p {
+    color: var(--grafito);
+    font-size: clamp(0.95rem, 2.6vw, 1.05rem);
+    margin-bottom: 1.6em;
+  }
+
+  .intro p:last-child {
+    color: var(--tinta);
+    font-weight: 500;
+  }
+
+  /* ============ entradas ============ */
+  .entrada {
+    margin-bottom: 24vh;
+  }
+
+  .titulo-tachado {
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 6vw, 2.6rem);
+    line-height: 1.25;
+    color: var(--grafito);
+    margin-bottom: 1.4em;
+  }
+
+  /* el span es el que anota RoughNotation: necesita ser inline-block */
+  .tachado-texto {
+    display: inline-block;
+  }
+
+  .cuerpo {
+    font-size: clamp(1rem, 2.8vw, 1.1rem);
+    color: var(--tinta);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  .cuerpo.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ============ cierre / firma ============ */
+  .cierre {
+    margin-top: 6vh;
+  }
+
+  .titulo-firma {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 9vw, 4rem);
+    line-height: 1.15;
+    color: var(--lacre);
+    margin-bottom: 0.9em;
+    transform: rotate(-1.5deg);
+    transform-origin: left center;
+  }
+
+  /* ============ fallback si RoughNotation no carga (sin line-through) ============ */
+  .tachado-texto.fallback-tachado {
+    background-image: linear-gradient(to right, rgba(168,59,42,0.85), rgba(168,59,42,0.85));
+    background-repeat: no-repeat;
+    background-size: 100% 3px;
+    background-position: 0 55%;
+  }
+
+  /* ============ movimiento reducido ============ */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .cuerpo {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rough-notation/0.5.1/rough-notation.iife.js"></script>
+<base target="_blank">
 </head>
-<body>
+<body class="journal-surface">
 
-<section class="pagina" id="portada">
-  <p class="num">cuaderno · intentos 1–5</p>
-  <h1>No encontré la versión perfecta de decírtelo.<br>Aquí están los intentos.</h1>
-  <p>Nada de esto salió bien a la primera. Lo dejé así, tachado, porque prefiero que veas el intento real y no una copia en limpio.</p>
-  <p class="scroll-hint">sigue bajando ↓</p>
-</section>
-
-<section class="pagina">
-  <div class="entrada" data-e="1">
-    <p class="folio">intento nº1 — tachado dos veces</p>
-    <div class="tachado-wrap"><span class="linea-tach">Tú me diste fuerza para cumplir mis metas.</span></div>
-    <p class="final">Antes dejaba las cosas a la mitad — planes, ideas, cuadernos enteros sin terminar. Contigo, sin proponérmelo, empecé a terminarlas. Pequeñas, al principio. Ahora reviso la lista y ya no caben en la palabra "pequeñas".</p>
-    <p class="margen">(esto tampoco quedó bien, pero ya no lo voy a tachar.)</p>
+  <!-- cursor tinta -->
+  <div class="tinta-cursor" id="tintaCursor" aria-hidden="true">
+    <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 26 Q 10 22 13 15 Q 15 11 14 6 Q 18 10 17 15 Q 16 21 10 24 Q 7 25.5 4 26 Z" fill="#2A323D"/>
+      <circle cx="23" cy="7" r="1.4" fill="#A83B2A" opacity="0.7"/>
+    </svg>
   </div>
-</section>
 
-<section class="pagina">
-  <div class="entrada" data-e="2">
-    <p class="folio">intento nº2 — tachado una vez</p>
-    <div class="tachado-wrap"><span class="linea-tach">Los sábados contigo eran lo mejor de mi semana.</span></div>
-    <p class="final">No tengo una hora favorita del día. Tengo una tarde de sábado — la de hablar de todo lo que aún no existe, y resolver, sin apuro, lo que sí. Se me enfriaba el café siempre. Nunca me importó.</p>
-  </div>
-</section>
+  <main class="cuaderno">
 
-<section class="pagina">
-  <div class="entrada" data-e="3">
-    <p class="folio">intento nº3 — casi lo tacho, pero no</p>
-    <div class="tachado-wrap"><span class="linea-tach">Me devolviste las ganas de vivir con solo hablarme.</span></div>
-    <p class="final">No dijiste mucho. No hacía falta. Hay frases cortas que pesan más que un discurso entero — y las tuyas, sin buscarlo, me recordaron a qué sabía la vida antes de que se me hubiera olvidado.</p>
-  </div>
-</section>
+    <!-- prólogo -->
+    <section class="intro" id="intro">
+      <p>¿Sabes lo que tiene de arrebatador ser tan auténtica? Que antes de llegar a apreciarlo vas a toparte con frases tachadas, y no fue el descuido ni la prisa lo que las dejó así, fue la certeza tardía de que ya no me servían para nombrarte.</p>
+      <p>No nacieron de mí cuando las escribí — se escucharon antes en tantas voces ajenas que hablaron de ti sin quedarse después a sostener lo dicho, en tanto refrán gastado que el idioma ofrece primero, antes de rendirse, a quien no encuentra algo mejor que ofrecer.</p>
+      <p>Ahí las dejo, tachadas, no como error mío sino como prueba exacta de todo lo que no alcanzó.</p>
+      <p>Lo que sigue debajo de cada una, eso sí es mío. Eso no se tacha, ni se tachará.</p>
+    </section>
 
-<section class="pagina">
-  <div class="entrada" data-e="4">
-    <p class="folio">intento nº4 — reescrito tres veces</p>
-    <div class="tachado-wrap"><span class="linea-tach">Eres una mujer muy fuerte y muy perseverante.</span></div>
-    <p class="final">Hay quienes sueltan rápido cuando algo se pone difícil. Tú no. Te he visto insistir en cosas que otros habrían dejado ir hace tiempo — un plan, una meta, una persona — con la misma terquedad silenciosa con la que el agua insiste en llegar, aunque tarde, aunque rodee.</p>
-    <p class="margen">(no encontré cómo decir esto sin que sonara a cumplido. sigue sonando a cumplido. igual me quedo con él.)</p>
-  </div>
-</section>
+    <!-- entradas -->
 
-<section class="pagina">
-  <div class="entrada" data-e="5">
-    <p class="folio">intento nº5 — el que más me costó</p>
-    <div class="tachado-wrap"><span class="linea-tach">Eres muy madura para tu edad y eso me encanta.</span></div>
-    <p class="final">Podrías tener razón y quedarte con ella. Prefieres soltarla si eso significa seguir. Eso no es debilidad — he visto de cerca lo que cuesta perdonar, y no lo confundo con ceder.</p>
-  </div>
-</section>
+    <article class="entrada" id="entrada-1">
+      <h2 class="titulo-tachado"><span class="tachado-texto">me inspiraste a ser mejor</span></h2>
+      <p class="cuerpo">No fue inspiración, esa palabra ya se gastó de tanto que la asumen sin doblarla ni una sola vez, de tanto repetirla sin peso, sin pausa, sin nadie que se detuviera a comprobar si todavía cabía algo de verdad adentro. Lo que hubo fue distinto y más terco: una meta pequeña que antes cabía entera en una tarde empezó a pesar como si le debiera una explicación a alguien, y ese alguien, sin proponérselo, sin decir una palabra siquiera, eras tú mirando de lejos mientras yo apenas intentaba. No sabría fechar el día exacto en que el peso cambió de forma, ni hace falta que lo sepa. Fue cerca de ti. El hecho, hecho está.</p>
+    </article>
 
-<section class="pagina" id="cierre">
-  <div class="entrada vis" data-e="6">
-    <p class="folio">última página — sin tachar</p>
-    <p class="final">Esto no es un poema terminado. Es un cuaderno con tachones, porque nunca encontré la manera perfecta de decir esto y dejé de esperarla. Aquí está tal como es: intentado, corregido, vuelto a intentar.</p>
-    <p class="firma">como tú, cuando algo te importa de verdad.</p>
-  </div>
-</section>
+    <article class="entrada" id="entrada-2">
+      <h2 class="titulo-tachado"><span class="tachado-texto">eran mis momentos favoritos de la semana</span></h2>
+      <p class="cuerpo">No fue la costumbre ni el simple orden del calendario lo que le robó una hora al sábado y se la entregó solo a nosotros, fue otra cosa, más caprichosa, que decidió que esa hora dejara de pesar igual que las demás horas de mi semana entera. No era la charla en sí, ni los planes que aún no existían más que en la voz, ni los problemas que deshacíamos casi jugando para no cargarlos tan en serio como merecían — era que ahí, en ese margen exacto de tiempo, el resto de mis días se volvía apenas un trámite para llegar de vuelta a ella. Sigue pasando. El sábado insiste, y yo con él.</p>
+    </article>
+
+    <article class="entrada" id="entrada-3">
+      <h2 class="titulo-tachado"><span class="tachado-texto">me devolviste las ganas de vivir</span></h2>
+      <p class="cuerpo">No fue el paso del tiempo, ni la lluvia aterradora de ideas negras que caía rozando cada cúmulo de mis pensamientos, lo que aligeró ese peso que ni te nombro. Fue algo más pesado al errar, algo que no quería ni mirar a los ojos por miedo de reconocerlo entero y quedarme sin excusa. Tal vez solo bastó el recuerdo de tu risa apasionada, esa que jamás pidió permiso para existir donde se le antojara. No lo entiendo, y sospecho que no voy a entenderlo nunca, porque tú ya no estás y yo ya no vuelvo a recitarlo — solo empalo ciertas estrofas viejas que a mi alma le hacen bostezar de puro cansancio de sentir. Y aun así, vuelvo a esa risa como quien vuelve a un idioma que ya no habla nadie más.</p>
+    </article>
+
+    <article class="entrada" id="entrada-4">
+      <h2 class="titulo-tachado"><span class="tachado-texto">eres una mujer fuerte</span></h2>
+      <p class="cuerpo">He visto a tanta gente soltar lo que dice querer con la misma facilidad liviana con que se suelta cualquier cosa que apenas empieza a pesar un poco. A ti no te he visto soltar nada así, ni una vez, ni a medias. Sigues insistiendo en lo que te propones aunque rendirse sería, con mucho, la salida más razonable, y sigues queriendo a quien decides querer aunque no siempre te devuelvan el mismo peso que entregas. No es virtud fácil de nombrar sin ensuciarla con la palabra equivocada, así que no la voy a llamar virtud: es terquedad, la misma que a otras personas les da vergüenza cargar y a ti, en cambio, te sostiene entera cuando nadie más está mirando.</p>
+    </article>
+
+    <article class="entrada" id="entrada-5">
+      <h2 class="titulo-tachado"><span class="tachado-texto">eres muy madura</span></h2>
+      <p class="cuerpo">Un siglo entero se sostuvo, sin que yo lo supiera, sobre la esperanza prolongada de que algo volviera a florecer aunque fuera en un solo rincón olvidado de mis pensamientos. Se veía imposible desde donde yo estaba parado, tan imposible como pedirle a la marea que no vuelva. Y sin embargo tú — que sabes soltar el orgullo antes de que se pudra por dentro y se vuelva otra cosa más amarga, que sabes perdonar sin cobrar después la cuenta guardada, que sabes empezar de nuevo sin arrastrar lo anterior como una condena — tú ya estás a una sola dirección de mis pasos. El hecho, hecho está.</p>
+    </article>
+
+    <!-- cierre -->
+    <section class="cierre" id="cierre">
+      <h2 class="titulo-firma">lo único que no taché</h2>
+      <p class="cuerpo">Te deseo, y no pienso disfrazarlo detrás de una palabra más prudente que no me pertenece. Pero aprendí — no sabría fecharlo, tal vez fue una noche cualquiera que dejó de serlo — a contener eso, a dejarlo quieto adentro en lugar de dejarlo hablar primero, no porque se haya apagado, que arde igual que el primer día, sino porque prefiero que lo que te llegue de mí no sea urgencia sino algo con lo que puedas quedarte tranquila, sin que te pese ni un gramo. Quiero que sepas todo lo que pienso y todo lo que haría si el tiempo y el lugar fueran otros, y quiero, al mismo tiempo, que sepas que puedo sostenerme entero en paz aunque no te tenga — no porque me importe poco, sino porque me importa tanto que no necesito apresurar nada para que sea cierto. El hecho, hecho está, aunque tarde.</p>
+    </section>
+
+  </main>
 
 <script>
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('vis'); });
-},{threshold:.45});
-document.querySelectorAll('.entrada').forEach(el=>obs.observe(el));
+(function () {
+  'use strict';
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ============================================================
+     1 · CURSOR TINTA (solo dispositivos con puntero fino)
+     ============================================================ */
+  (function cursorTinta() {
+    var cursor = document.getElementById('tintaCursor');
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    var objetivoX = -100, objetivoY = -100;
+    var actualX = -100, actualY = -100;
+    var activo = false;
+
+    document.addEventListener('mousemove', function (e) {
+      objetivoX = e.clientX;
+      objetivoY = e.clientY;
+      if (!activo) {
+        activo = true;
+        actualX = objetivoX;
+        actualY = objetivoY;
+        cursor.classList.add('visible');
+      }
+    });
+
+    document.addEventListener('mouseleave', function () {
+      activo = false;
+      cursor.classList.remove('visible');
+    });
+
+    (function seguir() {
+      // interpolación suave: la tinta "remolquea" al cursor
+      actualX += (objetivoX - actualX) * 0.16;
+      actualY += (objetivoY - actualY) * 0.16;
+      cursor.style.transform = 'translate(' + (actualX - 6) + 'px,' + (actualY - 26) + 'px)';
+      requestAnimationFrame(seguir);
+    })();
+  })();
+
+  /* ============================================================
+     2 · REVELADO DEL CUERPO DE TEXTO (fade + leve subida, ~1s)
+     ============================================================ */
+  function revelarCuerpo(cuerpo) {
+    if (reduceMotion) {
+      cuerpo.style.transition = 'none';
+    }
+    cuerpo.classList.add('visible');
+  }
+
+  /* ============================================================
+     3 · TACHONES ANIMADOS — RoughNotation + IntersectionObserver
+        Solo la PRIMERA vez que el título entra en pantalla.
+     ============================================================ */
+  function prepararTachones() {
+    var titulos = document.querySelectorAll('.titulo-tachado .tachado-texto');
+
+    if (!('IntersectionObserver' in window)) {
+      // navegador antiguo: tachar todo de inmediato con fallback
+      titulos.forEach(function (t) { t.classList.add('fallback-tachado'); });
+      document.querySelectorAll('.cuerpo').forEach(revelarCuerpo);
+      return;
+    }
+
+    var observador = new IntersectionObserver(function (registros) {
+      registros.forEach(function (registro) {
+        if (!registro.isIntersecting) return;
+
+        var titulo = registro.target;
+        var entrada = titulo.closest('.entrada');
+        var cuerpo = entrada ? entrada.querySelector('.cuerpo') : null;
+
+        // clave: dejar de observar -> la animación ocurre UNA sola vez
+        observador.unobserve(titulo);
+
+        // el cuerpo aparece enseguida, suave
+        if (cuerpo) revelarCuerpo(cuerpo);
+
+        // medio segundo después, el tachón a mano alzada
+        setTimeout(function () {
+          if (reduceMotion) return; // sin animación: queda sin tachar, como apariencia en reposo
+          if (window.RoughNotation && typeof window.RoughNotation.annotate === 'function') {
+            var anotacion = window.RoughNotation.annotate(titulo, {
+              type: 'strike-through',
+              color: '#A83B2A',
+              strokeWidth: 2.2,
+              iterations: 2,
+              animationDuration: 600,
+              multiline: true
+            });
+            anotacion.show();
+          } else {
+            titulo.classList.add('fallback-tachado');
+          }
+        }, 500);
+      });
+    }, { threshold: 0.5 });
+
+    titulos.forEach(function (t) { observador.observe(t); });
+  }
+
+  /* ============================================================
+     4 · REVELADO DEL CIERRE (no lleva tachón, solo fade)
+     ============================================================ */
+  function prepararCierre() {
+    var firma = document.querySelector('.titulo-firma');
+    var cuerpo = document.querySelector('.cierre .cuerpo');
+    if (!('IntersectionObserver' in window)) {
+      revelarCuerpo(cuerpo);
+      return;
+    }
+    var obs = new IntersectionObserver(function (registros) {
+      registros.forEach(function (r) {
+        if (!r.isIntersecting) return;
+        obs.unobserve(r.target);
+        revelarCuerpo(cuerpo);
+        firma.style.opacity = '1';
+        firma.style.transform = 'rotate(-1.5deg) translateY(0)';
+      });
+    }, { threshold: 0.4 });
+    firma.style.opacity = '0';
+    firma.style.transform = 'rotate(-1.5deg) translateY(14px)';
+    firma.style.transition = 'opacity 1.2s ease, transform 1.2s ease';
+    obs.observe(firma);
+  }
+
+  prepararTachones();
+  prepararCierre();
+})();
 </script>
 </body>
 </html>
